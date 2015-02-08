@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CSS Experiments</title>
+    <link rel="stylesheet" href="../../css/experiments.css">
+    <style>
+        .test {
+            color: green;
+            background-color: maroon;
+        }
+
+        #testId {
+            color: yellow;
+        }
+
+            #testId:hover {
+                color: red;
+            }
+    </style>
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>Internal CSS</h1>
+            <p>
+                This experiment shows how we can provide styling information at the document level. 
+                Hover over the yellow text below to see change in styling.
+            </p>
+            <h4>Demo:</h4>
+            <p class="test">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+
+            <p id="testId">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+
+            <h4>Code snippet:</h4>
+            <xmp>
+...
+<style>
+    .test {
+        color: green;
+        background-color: maroon;
+    }
+
+    #testId {
+        color: yellow;
+    }
+
+   #testId:hover {
+       color: red;
+   }
+</style>
+...
+</xmp>
+            <p>
+               We use the above <i>style</i> tag in the head section of this html page. '.' is used as a class selector and '#' is used an id selector.
+                So, in our example all the tags with class 'test' will have background color as maroon.
+                We can also describe styling information on mouse events. In the above example, the text color of an html element is altered on mouse 
+                hover.
+            </p>
+
+        </div>
+
+
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/cqo8s9g1kmsvkv3rkpk7kpse8e0" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/html_css/003-internalCSS.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

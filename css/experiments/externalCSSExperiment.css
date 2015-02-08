@@ -1,0 +1,12 @@
+﻿.test {
+    color: green;
+    background-color: maroon;
+}
+
+#testId {
+    color: yellow;
+}
+
+    #testId:hover {
+        color: red;
+    }

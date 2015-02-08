@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery HTML and CSS</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/jQueryExperiment.css" />
+    <link rel="stylesheet" href="../../css/jquery-ui.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/jquery-ui.js"></script>
+    <script src="../../javascript/experiments/000-jQueryExperiments.js"></script>
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>jQuery HTML and CSS</h1>
+            <p>
+                In this experiment, we see how we can use jQuery to add new elements in the html page and modify its styling based
+                on an event. 
+                As you can see in the demo, there are 2 button: add a rectangle shape in a bordered canvas and change the color of
+                the shapes added to the canvas.
+                Also, the shapes added to the canvas are draggable only within the canvas border.
+            </p>
+            <h4>Demo:</h4>
+            <div class="row">
+                <div class="col-lg-2">
+                    <button class="btn-default" id = "addRectangle">Add Rectangle</button> 
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn-default" id = "changeBlueBtn">Blue shapes</button> 
+                </div>
+            </div>
+
+            <div id="canvas"></div>
+             <h4>Code snippet:</h4>
+<xmp>
+...
+HTML:
+      <div class="row">
+         <div class="col-lg-2">
+           <button class="btn-default" id = "addRectangle">Add Rectangle</button> 
+         </div>
+         <div class="col-lg-2">
+           <button class="btn-default" id = "changeBlueBtn">Blue shapes</button> 
+         </div>
+      </div>
+
+      <div id="canvas"></div>
+
+Javascript:
+
+     $("#addRectangle").click(function () {
+        console.log("add rect called");
+        var r = $("<canvas class='canvas-rect'/>")
+        r.draggable({ containment: "parent" });
+        $(this).parent().parent().parent().find("#canvas").append(r);
+    });
+
+    $("#changeBlueBtn").click(function () {
+        $(".canvas-rect").css("background-color", "blue");
+    });
+
+...
+</xmp>
+            <p>
+                The draggable movement of the rectangle is contained within the canvas by using the "containment" attribute as "parent".
+                Also, some traversing through the DOM tree is required to add the rectangle to the div after the row div of the button.
+                The styling of an element can be changed using the css method.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?feature=player_embedded&v=eTUstNknCrw" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/js/004-jQueryHTMLCSS.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/jQueryExperiment.css" target="_blank">CSS for experiment</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/000-jQueryExperiments.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+        </div>         
+    </div>
+</body>
+</html>

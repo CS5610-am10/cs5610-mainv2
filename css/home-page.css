@@ -1,0 +1,171 @@
+﻿body {
+      background: #333333 url(../images/batman4.png);
+      margin: 0px;
+      color: #010101;
+}
+
+a {
+    text-decoration:none; 
+    color:#6a6969;
+
+}
+a:hover {
+    color:#979797;
+}
+a img{
+    border:0px;
+}
+
+.navigation-menu {
+    height: 90px;
+    text-align: center;
+    width: auto;
+    background-color: #222222;
+}
+
+    .navigation-menu ul {
+        padding-top: 0px;
+        margin:0px;
+    }
+
+    
+
+        .navigation-menu li > a {
+            display: block;
+            padding: 0px;
+            position: relative;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+.nav {
+    list-style: none outside none;
+}
+
+
+
+#top-social li {
+    float: left;
+    list-style: none;
+    margin-left: 10px;
+    display: list-item;
+}
+#top-social .facebook {
+    text-indent: -9999px;
+    display: block;
+background: url(../images/fb.png) no-repeat;
+width:30px;
+height: 30px;
+}
+#top-social .google {
+    text-indent: -9999px;
+display: block;
+background: url(../images/gmail.png) no-repeat;
+width:30px;
+height: 30px;
+}
+#top-social .linkedin {
+    text-indent: -9999px;
+display: block;
+background: url(../images/linkedin.png) no-repeat;
+width:30px;
+height: 30px;
+}
+
+@media screen and (min-width: 1100px) {
+    .col-25 {
+        float:left;
+        width:25%;
+        padding-right:1%;
+    }   
+    .col-50 {
+        float:left;
+        width:50%;
+    }
+    .col-75 {
+        float:left;
+        width:74%;    
+    }
+
+    .navigation-menu li {
+        float: left;
+        width:8%;
+        padding-top:30px;
+        padding-bottom:30px;
+    }
+
+    h1{
+        font: 400 58px/60px 'Bree Serif', Georgia, serif; color:#000000; margin-top:0px;
+    }   
+    p {
+        font: 400 18px/22px 'Open Sans', Verdana, Helvetica, sans-serif;color:#000000;
+    }
+   #top-social {
+    float:left;
+    list-style: none outside none;
+    text-decoration:none;
+}
+}
+
+@media screen and (min-width: 600px) and (max-width: 1100px) {
+    .col-25 {
+        float:left;
+        width:24%;
+        padding-right:1%;
+
+    }   
+     .col-50 {
+        float:left;
+        width:50%;
+    }
+    .col-75 {
+        float:left;
+        width:74%;
+    }
+ 
+    .navigation-menu li {
+        float: left;
+        margin:1%;
+        
+    }
+    #top-social {
+    float:left;
+    list-style: none outside none;
+    text-decoration:none;
+}   
+}
+
+@media screen and (max-width: 600px) {
+    .col-25 {
+        clear:both;
+    }   
+     .col-50 {
+        float:left;
+        width:50%;
+    }
+    .col-75 {
+        clear:both;
+    }
+     .navigation-menu li {
+        float: left;
+        margin:1%;
+        
+    }
+
+}
+ .container {
+       width: auto;
+       margin:5%;
+    }
+
+ img {
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    width: 100%;
+    height: 100%;
+}
+
+

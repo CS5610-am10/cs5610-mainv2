@@ -1,0 +1,34 @@
+
+body{
+	background:#333333 url(../images/books.jpg);
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:5%;
+    margin-bottom:5%;
+	font: 400 14px/22px 'Open Sans', Verdana, Helvetica, sans-serif;
+	color:black;
+}
+
+
+ul{margin:0px; padding:0px;}
+a {text-decoration:none; color:#0A0CA9;}
+a:hover {color:#B7B3EA;}
+a img{border:0px;}
+
+.experiments-container{
+	background-color: #8C694E;
+	overflow:auto;
+	padding-bottom:100px;
+    opacity:0.85;
+    padding:1%;
+}
+
+iframe {
+    width:80%;
+}
+
+.demo-bg {
+    background-color:chocolate;
+    width:auto;
+}
+

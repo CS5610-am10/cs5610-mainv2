@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Responsive Layout</title>
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/responsive.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Responsive Layout</h1>
+        <p>
+            This experiment is to demonstrate how we can make the layout of our page responsive.
+            The experiment demonstrates two sections which are side by side. On reducing the width of the page the layout of the page 
+            is modified to display the section one below the other.
+        </p>
+        <h4>Demo:</h4>
+        <div class="sectionRow">
+        <div id="sectionLeft">
+            <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
+        <div id="sectionRight">
+            <p>
+                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+            </p>
+        </div>
+            </div>
+        <h4>Code Snippet:</h4>
+<xmp>
+@media screen and (min-width: 800px) {
+    #sectionLeft {
+        width:50%;
+        color: red;
+        float:left;
+    }
+
+    #sectionRight {
+        width: 50%;
+        color: yellow;
+        float:left;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 800px) {
+     #sectionLeft {
+        width:50%;
+        color: red;
+    }
+
+    #sectionRight {
+        width: 50%;
+        color: yellow;
+    }
+
+}
+
+</xmp>
+        <p>
+            As you can see from the above css snippet adjacent breakpoints are created at 500 and 800 pixels.
+            Explanation: The red and yellow text sections will be shown side by side for window width greater that 800px and will be shown
+            one below the other for window width between 500px and 800px.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/cm0oqectp6c31sr6l2s1r0glah0" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+             <h1>Source</h1>
+             <ul>
+               <li><a href="../../fileview/Default.aspx?~/experiments/responsive_design/002-responsiveLayout.html" target="_blank">HTML</a></li>
+               <li><a href="../../fileview/Default.aspx?~/css/experiments/responsive.css" target="_blank">CSS</a></li>
+             </ul>
+        </div>
+
+    </div>
+</body>
+</html>

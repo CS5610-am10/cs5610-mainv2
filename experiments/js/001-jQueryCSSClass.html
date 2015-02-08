@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery CSS Spinner</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/jQueryExperiment.css" />
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <script src="../../javascript/experiments/000-jQueryExperiments.js"></script>
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>jQuery CSS Spinner</h1>
+            <p>
+                In many web pages, we see a refresh button, clicking on which reload some content from the server. In order
+                to provide good user experience the refresh icon will rotate, conveying to the user to wait until the 
+                content is being loaded.
+                Click on the start and stop buttons below to start and stop the spinner respectively.
+            </p>
+            <h4>Demo:</h4>
+            <div id="spinner-div">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <button id="spinStart" type="button" class="btn btn-xs btn-info">Start</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button id="spinStop" type="button" class="btn btn-xs btn-danger">Stop</button>
+                    </div>
+                    <div class="col-xs-4">    
+                        <img id="spinImage" src="../../images/spinner.png" />
+                    </div>
+                </div>
+               
+            </div>
+             <h4>Code snippet:</h4>
+<xmp>
+...
+HTML:
+    <div id="spinner-div">
+        <div class="row">
+            <div class="col-xs-1">
+                <button id="Button1" type="button" class="btn btn-xs btn-info">Start</button>
+            </div>
+            <div class="col-xs-1">
+                <button id="Button2" type="button" class="btn btn-xs btn-danger">Stop</button>
+            </div>
+            <div class="col-xs-4">    
+                <img id="Img1" src="../../images/spinner.png" />
+            </div>
+        </div>          
+    </div>
+
+Javascript:
+
+     $("#spinStart").click(function () {
+        console.log("click called");
+        $("#spinImage").addClass("spinner");
+    });
+
+    $("#spinStop").click(function () {
+        console.log("click called");
+        $("#spinImage").removeClass("spinner");
+    });
+...
+</xmp>
+            <p>
+                On clicking on the "start" button, the CSS class "spinner" is added to the spinner image.
+                In the spinner class, I use CSS3 keyframes to provide the rotating effect.
+                And on clicking on the "stop" button, the "spinner" CSS class is removed from the spinner image.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/catrejk2894ip4mllgcqig61fj8" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/js/001-jQueryCSSClass.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/jQueryExperiment.css" target="_blank">CSS for experiment</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/000-jQueryExperiments.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+        </div>         
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Responsive Image</title>
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/responsive.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Responsive Image</h1>
+        <p>
+            This experiment shows how we can make images responsive to window size. 
+            Change the window size to see the below image adapting its size to the window size.
+            <i><b>Note: </b> Even without doing any changes in style, we can get responsive behavior. But, this experiment shows how we control the width of the image for different window sizes.</i>
+        </p>
+        <h4>Demo:</h4>
+        <div class="responsiveImage">
+            <img src="../../images/batman-logo.gif" />
+        </div>
+        <h4>Code Snippet:</h4>
+<xmp>
+@media screen and (min-width: 800px) {
+  ...
+
+    .responsiveImage {
+        width: 700px;
+    }
+
+
+}
+
+@media screen and (min-width: 500px) and (max-width: 800px) {
+  ...
+    .responsiveImage {
+        width: 450;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .responsiveImage {
+        width: 350px;
+    }
+}
+</xmp>
+        <p>
+           The above changes in the css file allows us to set the width of the image for various adjacent window breakpoints.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/cm0oqectp6c31sr6l2s1r0glah0" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+             <h1>Source</h1>
+             <ul>
+               <li><a href="../../fileview/Default.aspx?~/experiments/responsive_design/001-responsiveImage.html" target="_blank">HTML</a></li>
+               <li><a href="../../fileview/Default.aspx?~/css/experiments/responsive.css" target="_blank">CSS</a></li>
+             </ul>
+        </div>
+        </div>
+</body>
+</html>

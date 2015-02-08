@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Responsive Table</title>
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/responsive.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Responsive Table</h1>
+        <p>
+            This experiment shows how we can achieve resposive tables. 
+            The experiment demonstrates that if the width of the window is reduced for a html page containing a table, we can
+            transform the table into rows containing "heading-value" pairs.<br />
+            Go ahead and change the width of the window.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ankit</td>
+                        <td>Masrani</td>
+                    </tr>
+                    <tr>
+                        <td>Jose</td>
+                        <td>Annunziato</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Code Snippet:</h4>
+<xmp>
+...
+
+@media screen and (min-width: 500px) and (max-width: 800px) {
+    
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        thead tr {
+            display: none;
+        }
+
+        td:nth-of-type(1):before {
+            content: "First Name";
+            padding-right: 10px;
+        }
+
+        td:nth-of-type(2):before {
+            content: "Last Name";
+            padding-right: 10px;
+        }
+
+        tr:nth-of-type(even) {
+            background-color: lightblue;
+        }
+
+        tr:nth-of-type(odd) {
+            background-color: blue;
+        }
+}
+
+...
+</xmp>
+        <p>
+          <b>Explanation: </b> We modify the manner in which the table is rendered in the 500px and 800px window segment.
+            <ol>
+                <li>The table components are rendered as block elements.</li>
+                <li>The table head is not displayed</li>
+                <li><i><xmp>td:nth-of-type(1):before</xmp></i> This means that before every first td element within a parent tag apply some styling.
+                    In our case, we add the table head contents that were removed from display.
+                </li>
+                <li>
+                    <i><xmp> tr:nth-of-type(even)</xmp></i>
+                    This lets us define styling for every even row.
+                </li>
+
+            </ol>
+
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://css-tricks.com/examples/ResponsiveTables/responsive.php" target="_blank">CSS tricks</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+             <h1>Source</h1>
+             <ul>
+               <li><a href="../../fileview/Default.aspx?~/experiments/responsive_design/003-responsiveTable.html" target="_blank">HTML</a></li>
+               <li><a href="../../fileview/Default.aspx?~/css/experiments/responsive.css" target="_blank">CSS</a></li>
+             </ul>
+        </div>
+        </div>
+</body>
+</html>

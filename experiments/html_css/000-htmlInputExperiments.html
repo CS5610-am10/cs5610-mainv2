@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HTML Experiments</title>
+    <link rel="stylesheet" href="../../css/experiments.css" >
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>1. Label and Input Tag</h1>
+            <p>This experiment shows how we can link a label
+                 to a particular input field and also provide a placeholder with a 
+                default value in the input field.</p>
+            
+             <h4>Demo:</h4>
+             <label for="name">Name</label>
+             <input type="text" id="name" placeholder="Ankit Masrani"/>
+              
+             <h4>Code snippet:</h4>
+<xmp>
+...
+<label for="name">Name</label>
+<input type="text" id="name" placeholder="Ankit Masrani"/>
+...
+</xmp>
+            <p>The label is linked to the input field with the <i>for</i> attribute.
+                The <i>placeholder</i> attribute in the input field is used to provide the user information regarding the value expected in the field.
+            </p>
+        </div>
+        <div>
+            <h1>2. Datalist</h1>
+            <p>This experiment shows how we can use "autocomplete" feature in html.</p>
+            <h4>Demo:</h4>
+            <label for="cuisine">Cuisine</label>
+            <input list="cuisine" />
+            <datalist id="cuisine">
+                <option>Indian</option>
+                <option>American</option>
+                <option>Thai</option>
+                <option>Mexican</option>
+            </datalist>
+            <h4>Code snippet:</h4>
+<xmp>
+...
+<input list="cuisine" />
+<datalist id="cuisine">
+    <option>Indian</option>
+    <option>American</option>
+    <option>Thai</option>
+    <option>Mexican</option>
+</datalist>
+...
+</xmp>
+            <p>
+                As you can see in the above code snippet we provide a set of pre-defined options to the user. The user can select 
+                one these options by either using the input box a drop-down or through auto-complete function while typing.
+                The user can also provide a completely new value in the input box.
+            </p>
+
+        </div>
+        
+        
+        <div>
+            <h1>3. Date and time</h1>
+            <p>
+               This experiment shows some tags introduced in HTML5 to provide date and time input functionality on an HTML page
+            </p>
+            <h4>Demo:</h4>
+            <div>
+                <label for="test-date">Date</label>
+                <input id="test-date" type="date" />
+            </div>
+            <div>
+                <label for="test-date-time">Date and Time</label>
+                <input id="test-date-time" type="datetime-local" />
+            </div>
+            <h4>Code snippet:</h4>
+<xmp>
+...
+<input id="Date1" type="date" />
+...
+<input id="Datetime-local1" type="datetime-local" />
+...
+</xmp>
+
+        </div>
+
+        <div>
+                <h1>References</h1>
+                <ul>
+                    <li><a href="https://plus.google.com/u/0/events/ck13mro46lgu4hgmbn8kv092d28" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                    <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h1>Source</h1>
+                <ul>
+                    <li><a href="../../fileview/Default.aspx?~/experiments/html_css/000-htmlInputExperiments.html" target="_blank">HTML</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS</a></li>
+                </ul>
+            </div>
+        
+    </div>
+</body>
+</html>

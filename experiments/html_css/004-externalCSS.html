@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CSS Experiments</title>
+    <link rel="stylesheet" href="../../css/experiments.css">
+    <link rel="stylesheet" href="../../css/experiments/externalCSSExperiment.css">
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>External CSS</h1>
+            <p>
+                This experiment shows how we can provide styling information using an external stylesheet file.
+                This stylesheet file can then be referenced within different web pagez and can be used to provide unified styling across the website.
+                In this way we can modify the styling of multiple web pages by changing a single file.
+                This manner of styling is followed within the industry.<br />
+
+                Hover over the yellow text below to see change in styling.
+            </p>
+            <h4>Demo:</h4>
+            <p class="test">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+
+            <p id="testId">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+
+            <h4>Code snippet:</h4>
+            <xmp>
+...
+
+<link rel="stylesheet" href="../../css/experiments/externalCSSExperiment.css">
+
+Contents of externalCSSExperiment.css:
+.test {
+    color: green;
+    background-color: maroon;
+}
+
+#testId {
+    color: yellow;
+}
+
+    #testId:hover {
+        color: red;
+    }
+
+...
+</xmp>
+            <p>
+               As shown in the above code snippet, we provide all the styling information within a different stylesheet file (.css) and 
+                reference that stylesheet file within this html page.
+            </p>
+
+        </div>
+
+
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/cqo8s9g1kmsvkv3rkpk7kpse8e0" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/html_css/004-externalCSS.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/externalCSSExperiment.css" target="_blank">CSS for experiment</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

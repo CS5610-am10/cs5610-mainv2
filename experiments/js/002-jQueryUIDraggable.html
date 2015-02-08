@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery UI Draggable</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/jQueryExperiment.css" />
+    <link rel="stylesheet" href="../../css/jquery-ui.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/jquery-ui.js"></script>
+    <script src="../../javascript/experiments/000-jQueryExperiments.js"></script>
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>jQuery UI Draggable</h1>
+            <p>
+                In this experiment, we see how we can use jQuery UI to create draggable UI. This particular functionality is
+                used in various applications, especially in the teaching area where students are asked to drag and match options
+                to a correct table heading. Here I show a small demo of matching food items to a cuisine.
+            </p>
+            <h4>Demo:</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                <table class="table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Indian food</td>
+                            <td>Italian food</td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                    </div>
+            </div>
+            <div>
+                <h5><b>Please drag the following food items to there respective columns in the above table.</b></h5>
+                <ul class="list-unstyled">
+                    <li class="draggable">Pizza</li>
+                    <li class="draggable">Butter chicken</li>
+                    <li class="draggable">Pasta</li>
+                    <li class="draggable">Pav Bhaji</li>
+                </ul>
+            </div>
+             <h4>Code snippet:</h4>
+<xmp>
+...
+HTML:
+      <div class="row">
+        <div class="col-lg-12">
+        <table class="table-bordered">
+            <thead>
+                <tr>
+                    <td>Indian food</td>
+                    <td>Italian food</td>
+                </tr>
+            </thead>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+            </div>
+    </div>
+    <div>
+        <h5><b>Please drag the following food items to there respective columns in the above table.</b></h5>
+        <ul class="list-unstyled">
+            <li class="draggable">Pizza</li>
+            <li class="draggable">Butter chicken</li>
+            <li class="draggable">Pasta</li>
+            <li class="draggable">Pav Bhaji</li>
+        </ul>
+    </div>
+
+Javascript:
+
+     $(".draggable").draggable();
+...
+</xmp>
+            <p>
+                Each list item is made draggable through the class selector "draggable".
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?feature=player_embedded&v=eTUstNknCrw" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://jqueryui.com/draggable/" target="_blank">jQuery webpage</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/js/002-jQueryUIDraggable.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/jQueryExperiment.css" target="_blank">CSS for experiment</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/000-jQueryExperiments.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+        </div>         
+    </div>
+</body>
+</html>

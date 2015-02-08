@@ -1,0 +1,5 @@
+﻿../story/whatisnext.htm?../experiments/story.txt                                     What is Next?
+../story/index.htm?../experiments/html_css/htmlCSSStory.txt                     WEEK 1 - HTML and CSS Experiments
+../story/index.htm?../experiments/responsive_design/responsiveDesignStory.txt       WEEK 2 - Responsive Design
+../story/index.htm?../experiments/bootstrap/bootstrapStory.txt       WEEK 3 - Bootstrap
+../story/index.htm?../experiments/js/jQueryStory.txt       WEEK 4 - jQuery

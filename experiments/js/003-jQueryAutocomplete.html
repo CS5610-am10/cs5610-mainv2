@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>jQuery Autocomplete</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/jQueryExperiment.css" />
+    <link rel="stylesheet" href="../../css/jquery-ui.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/jquery-ui.js"></script>
+    <script src="../../javascript/experiments/000-jQueryExperiments.js"></script>
+</head>
+<body>
+    <div class="experiments-container">
+        <div>
+            <h1>jQuery Autocomplete</h1>
+            <p>
+                In this experiment, we see how we can use jQuery UI to use the autocomplete widget. I think this widget is
+                very cool and very resourceful. We use this all the time on websites. For example: On Amazon.com when you type in
+                "jacket" it will autocomplete to give you options: "Jackets for men" and "Jackets for women."
+            </p>
+            <h4>Demo:</h4>
+            <div class="ui-widget">
+                <label for="countries">Location: </label>
+                <input id="countries"/>
+            </div>
+            
+             <h4>Code snippet:</h4>
+<xmp>
+...
+HTML:
+      <div class="ui-widget">
+                <label for="countries">Location: </label>
+                <input id="countries"/>
+      </div>
+
+Javascript:
+
+    var countries = ["USA", "India", "Australia", "New Zealand"];
+    $("#countries").autocomplete({ source: countries });
+...
+</xmp>
+            <p>
+                The countries list variable defined is used to assist user input. Currently we have hard-coded this list, but we can
+                easily populate it through a server response from the database.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="http://jqueryui.com/autocomplete/" target="_blank">jQuery webpage</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/js/003-jQueryAutocomplete.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/jQueryExperiment.css" target="_blank">CSS for experiment</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/000-jQueryExperiments.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+        </div>         
+    </div>
+</body>
+</html>
