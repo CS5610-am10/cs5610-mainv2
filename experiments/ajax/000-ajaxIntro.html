@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Introduction to AJAX</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/experiments/000-ajaxExperiments.js"></script>
+    <script src="../../javascript/bootstrap.js"></script>
+
+</head>
+<body>
+
+    <div class="experiments-container">
+        <h1>Get Weather using AJAX</h1>
+        <p>
+            This experiment demonstrates the use of AJAX to fetch weather information for the input location.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <div>
+                <div>
+                    <div class="input-group">
+                        <input type="text" id="locationInfo" class="form-control" placeholder="Search for weather by city,country. Example: Boston,US">
+                        <span class="input-group-btn">
+                            <button id="searchWeather" class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                    <!-- /input-group -->
+                </div>
+            </div>
+            <div>
+                <div>
+                    <ul id="weatherInfo" class="list-unstyled"></ul>
+                </div>
+            </div>
+        </div>
+        <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+        <xmp>
+...
+<div>
+    <div>
+        <div>
+            <div class="input-group">
+                <input type="text" id="Text1" class="form-control" placeholder="Search for weather by city,country. Example: Boston,US">
+                <span class="input-group-btn">
+                    <button id="Button1" class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+            <!-- /input-group -->
+        </div>
+    </div>
+    <div>
+        <div>
+            <ul id="Ul1" class="list-unstyled"></ul>
+        </div>
+    </div>
+ </div>
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+$(function () {
+    $("#searchWeather").click(function () {
+        var locationInfo = $("#locationInfo").val();
+        $.ajax({
+            url: "http://api.openweathermap.org/data/2.5/weather?q=" + locationInfo + "&units=metric&format=jsonp",
+            dataType: "jsonp",
+            success: renderWeather
+        });
+    });
+});
+
+function renderWeather(weather) {
+    var weatherOutputList = $("#weatherInfo");
+    weatherOutputList.empty();
+    $("<li>").append("<b>City Name: </b>" + weather.name).appendTo(weatherOutputList);
+    $("<li>").append("<b>Country: </b>" + weather.sys.country).appendTo(weatherOutputList);
+    $("<li>").append("<b>Weather Description: </b>" + weather.weather[0].description).appendTo(weatherOutputList);
+    $("<li>").append("<b>Temperature Current: </b>" + weather.main.temp + " degrees celsius").appendTo(weatherOutputList);
+    $("<li>").append("<b>Wind Speed: </b>" + weather.wind.speed + " km/hr").appendTo(weatherOutputList);
+
+}
+...
+</xmp>
+        <p>
+            As you can see from the above javascript snippet, jQuery is used to dynamically add 'li' elements
+            to a previously defined unordered list.
+        </p>
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/cgpqvipt99ha7u3ckuj3kd37csk" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/ajax/000-ajaxIntro.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/000-ajaxExperiments.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+
+
+    </div>
+
+
+</body>
+</html>

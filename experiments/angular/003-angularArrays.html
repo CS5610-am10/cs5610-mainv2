@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Array Handling with Angular.js</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/experiments/angular/003-angulararrays.js"></script>
+</head>
+<body ng-app="ArraysApp">
+    <div ng-controller="ArraysAppController" class="experiments-container">
+        <h1>Array Handling with Angular.js</h1>
+        <p>
+            This experiment shows how we can manipulate arrays using Angular.js. 
+            The experiment demonstrates a simple items check-list in which we can add new items, deleted 
+            previously added items and mark items as complete.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <b>My movies</b>
+            <table class="table-condensed">
+                <thead>
+                    <th>&nbsp;</th>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="text" ng-model="newItem"/>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" ng-click="addItem()">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in items">
+                        <td><input type="checkbox" ng-click="temp(item)" ng-checked="item.isComplete"</td>
+                        <td>
+                            <label class="done-{{item.isComplete}}">{{item.description}}</label>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" ng-click="removeItem(item)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>    
+        </div>
+
+         <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+<xmp>
+...
+<table class="table-condensed">
+        <thead>
+            <th>&nbsp;</th>
+            <th>
+                Item
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </thead>
+        <tbody>
+                    
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="text" ng-model="newItem"/>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success" ng-click="addItem()">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-repeat="item in items">
+                <td><input type="checkbox" ng-click="temp(item)" ng-checked="item.isComplete"</td>
+                <td>
+                    <label class="done-{{item.isComplete}}">{{item.description}}</label>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" ng-click="removeItem(item)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+
+</table>
+
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+    var items = [
+        {
+            "isComplete": false,
+            "description": "Bread"
+        },
+        {
+            "isComplete": false,
+            "description": "Butter"
+        },
+        {
+            "isComplete": false,
+            "description": "Apples"
+        },
+        {
+            "isComplete": false,
+            "description": "Juice"
+        },
+    ];
+
+    $scope.items = items;
+
+    $scope.temp = function (item) {
+        item.isComplete = !item.isComplete;
+    }
+
+    $scope.addItem = function () {
+        var newItem = $scope.newItem;
+        $scope.items.push({ "isComplete": false, "description": newItem });
+        $scope.newItem = null;
+    }
+
+    $scope.removeItem = function (item) {
+        items.splice(items.indexOf(item), 1);
+    }
+...
+</xmp>
+            <p>
+                The two important methods, as shown in the snippet, to add and remove items from a list in Angular.js
+                is "push" and "splice" respectively.
+                Also, "ng-checked" can is used to toggle the check-box value and a css class selector along with
+                the checkbox value is used to strike-through an item that is checked.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/clvi3kt97lvt3dhkhddvrm4nhqg" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular/003-angularArrays.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments/angularExperiment.css" target="_blank">CSS for experiment</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular/003-angulararrays.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

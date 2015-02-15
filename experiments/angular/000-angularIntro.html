@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Introduction to Angular.js</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/experiments/angular/000-angularintro.js"></script>
+</head>
+<body ng-app="WeatherApp">
+    <div ng-controller="WeatherAppController" class="experiments-container">
+        <h1>Get Weather using Angular.js</h1>
+        <p>
+            This experiment is an introduction to Angular.js and shows how we can use Angular.js to get the weather of a
+            city through a third-party API call.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <div>
+                <div class="input-group">
+                  <input type="text" ng-model="locationInfo" class="form-control" placeholder="Search for weather by city,country. Example: Boston,US">
+                    <span class="input-group-btn">
+                        <button ng-click="searchWeather()" class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div><!-- /input-group -->
+            </div>
+            <div>
+                <ul class="list-unstyled">
+                    <li ng-repeat="info in weatherInfo">
+                        <b>{{info.name}} :</b>
+                        {{info.value}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+...
+    <div>
+          <div>
+                <div class="input-group">
+                  <input type="text" ng-model="locationInfo" class="form-control" 
+                      placeholder="Search for weather by city,country. Example: Boston,US">
+                    <span class="input-group-btn">
+                        <button ng-click="searchWeather()" class="btn btn-default" type="button">Go!</button>
+                    </span>
+                 </div><!-- /input-group -->
+            </div>
+            <div>
+                <ul class="list-unstyled">
+                    <li ng-repeat="info in weatherInfo">
+                        <b>{{info.name}} :</b>
+                        {{info.value}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+        $scope.searchWeather = function () {
+        var locationInfo = $scope.locationInfo;
+        $http.jsonp("http://api.openweathermap.org/data/2.5/weather?q=" + 
+                locationInfo + "&units=metric&format=jsonp&callback=JSON_CALLBACK").
+        success(function (weather) {
+            $scope.weatherInfo = [
+                {"name" : "City Name", "value" : weather.name},
+                {"name" : "Country", "value" : weather.sys.country},
+                {"name" : "Weather Description", "value" : weather.weather[0].description},
+                {"name" : "Temperature Current (degrees celsius)", "value" : weather.main.temp},
+                {"name" : "Wind Speed (km/hr)", "value" : weather.wind.speed}
+            ];
+        });
+
+    }
+...
+</xmp>
+            <p>
+                As you can see from the above javascript snippet, $http built in magic variable is used to fetch the weather
+                information for the city provided in the input. We can bind the input field in the UI to the javascript using
+                "ng-model" attribute in the element.
+                The response received from the weather API is populated in a list of weather attributes and this list is also binded
+                to the UI.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/clvi3kt97lvt3dhkhddvrm4nhqg" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular/000-angularIntro.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular/000-angularintro.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

@@ -3,3 +3,5 @@
 ../story/index.htm?../experiments/responsive_design/responsiveDesignStory.txt       WEEK 2 - Responsive Design
 ../story/index.htm?../experiments/bootstrap/bootstrapStory.txt       WEEK 3 - Bootstrap
 ../story/index.htm?../experiments/js/jQueryStory.txt       WEEK 4 - jQuery
+../story/index.htm?../experiments/ajax/ajaxStory.txt       WEEK 5 (Part I) - AJAX, JSON
+../story/index.htm?../experiments/angular/angularStory.txt       WEEK 5 (Part II) - Angular.js

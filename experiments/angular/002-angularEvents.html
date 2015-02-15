@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events using Angular.js</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/experiments/angular/002-angularevents.js"></script>
+</head>
+<body ng-app="EventApp">
+    <div ng-controller="EventAppController" class="experiments-container">
+        <h1>Events using Angular.js</h1>
+        <p>
+            A common requirement we have from our data is the ability to sort it on some attribute.
+            In this experiment, a table is displayed with data about movies and there are 2 buttons next to 
+            each other for both the year and the rating attribute to sort the data in ascending and descending
+            order.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <b>My movies</b>
+            <table class="table table-condensed">
+                <thead>
+                    <th>Title</th>
+                    <th>
+                        Year 
+                        <button type="button" class="btn btn-default" ng-click="sortDescendingYear()">
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="sortAscendingYear()">
+                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                    <th>
+                        Rating
+                        <button type="button" class="btn btn-default" ng-click="sortDescendingRating()">
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="sortAscendingRating()">
+                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="movie in movies | orderBy : sortFunc : reverseVar">
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.year}}</td>
+                        <td>{{movie.rating}}</td>
+                    </tr>
+                </tbody>
+
+            </table>    
+        </div>
+        <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+<xmp>
+...
+        <table class="table table-condensed">
+                <thead>
+                    <th>Title</th>
+                    <th>
+                        Year 
+                        <button type="button" class="btn btn-default" ng-click="sortDescendingYear()">
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="sortAscendingYear()">
+                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                    <th>
+                        Rating
+                        <button type="button" class="btn btn-default" ng-click="sortDescendingRating()">
+                            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="sortAscendingRating()">
+                            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                        </button>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="movie in movies | orderBy : sortFunc : reverseVar">
+                        <td>{{movie.title}}</td>
+                        <td>{{movie.year}}</td>
+                        <td>{{movie.rating}}</td>
+                    </tr>
+                </tbody>
+
+    </table>    
+
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+    $scope.reverseVar = false;
+    var movies = [
+        {
+            "title": "Godfather",
+            "year": 1994,
+            "rating": 9.2
+        },
+        {
+            "title": "The Dark Knight",
+            "year": 2008,
+            "rating": 8.9
+        },
+        {
+            "title": "Psycho",
+            "year": 1960,
+            "rating": 8.5
+        },
+        {
+            "title": "Goodfellas",
+            "year": 1990,
+            "rating": 8.7
+        },
+    ];
+
+    $scope.movies = movies;
+
+    sortVar = 'title';
+
+    $scope.sortFunc = function (movie) {
+        return movie[sortVar];
+    }
+
+    $scope.sortDescendingYear = function () {
+        sortVar = 'year';
+        $scope.reverseVar = true;
+    }
+
+    $scope.sortAscendingYear = function () {
+        sortVar = 'year';
+        $scope.reverseVar = false;
+    }
+
+    $scope.sortDescendingRating = function () {
+        sortVar = 'rating';
+        $scope.reverseVar = true;
+    }
+
+    $scope.sortAscendingRating = function () {
+        sortVar = 'rating';
+        $scope.reverseVar = false;
+    }
+...
+</xmp>
+            <p>
+                In order to display the movies defined in the javascript file, "ng-repeat" attribute is used to
+                iterate over the mapped list of movies variable. "ng-repeat" also let's us specify the predicate
+                to sort by and the sort order(ascending/descending).
+                So, on click of the order-by buttons, the predicate and the sort order is changed and the data is
+                rearranged in the table.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/clvi3kt97lvt3dhkhddvrm4nhqg" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular/002-angularEvents.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular/002-angularevents.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+        
+
+    </div>
+
+</body>
+</html>

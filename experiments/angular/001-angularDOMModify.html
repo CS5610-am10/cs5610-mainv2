@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Translator using Angular.js</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/experiments/angular/001-angulardommodify.js"></script>
+</head>
+<body ng-app="TranslateApp">
+    <div ng-controller="TanslateController" class="experiments-container">
+        <h1>Language Translator using Angular.js</h1>
+        <p>
+            In this experiment Angular.js is used to translate the text inputted by the user to 3 different languages.
+            This experiment shows how we can perform view (html element) and the model (javascript) binding using Angular.js.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <label for="enText">English: </label>
+            <input name="enText" ng-model="enText" ng-change="translate()" text="car"/>
+        </div>
+        <div>
+            <b>Russian: </b>
+            {{ruText}}
+        </div>
+        <div>
+            <b>French: </b>
+            {{frText}}
+        </div>
+        <div>
+            <b>German: </b>
+            {{deText}}
+        </div>
+        <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+<xmp>
+...
+        <div>
+            <label for="enText">English: </label>
+            <input name="enText" ng-model="enText" ng-change="translate()" text="car"/>
+        </div>
+        <div>
+            <b>Russian: </b>
+            {{ruText}}
+        </div>
+        <div>
+            <b>French: </b>
+            {{frText}}
+        </div>
+        <div>
+            <b>German: </b>
+            {{deText}}
+        </div>
+
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+        $scope.translate = function () {
+        var input = $scope.enText;
+        $http.jsonp("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20150214T214754Z.f24524a6ba947e55.0b517ffb397939ef326b4b298f5c1944e8de47c4&lang=en-ru&text="+input+"&callback=JSON_CALLBACK").
+        success(function (response) {
+            $scope.ruText = response.text[0];
+        });
+
+        $http.jsonp("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20150214T214754Z.f24524a6ba947e55.0b517ffb397939ef326b4b298f5c1944e8de47c4&lang=en-fr&text=" + input + "&callback=JSON_CALLBACK").
+        success(function (response) {
+            $scope.frText = response.text[0];
+        });
+
+        $http.jsonp("https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20150214T214754Z.f24524a6ba947e55.0b517ffb397939ef326b4b298f5c1944e8de47c4&lang=en-de&text=" + input + "&callback=JSON_CALLBACK").
+        success(function (response) {
+            $scope.deText = response.text[0];
+        });
+    }
+...
+</xmp>
+            <p>
+                On change of the value in the input box for english text string a function is invoked, which will
+                make JSONP API calls and get Russian, French and German versions of the input.
+                This translated text is assigned to the UI bound variables and hence it can be displayed on the
+                screen immediately.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/clvi3kt97lvt3dhkhddvrm4nhqg" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="http://www.w3schools.com/" target="_blank">w3schools</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular/001-angularDOMModify.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular/001-angulardommodify.js" target="_blank">Javascript</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
