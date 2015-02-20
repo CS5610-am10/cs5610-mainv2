@@ -1,0 +1,22 @@
+﻿<h2>Fakebook Home</h2>
+<table class="table-condensed">
+    <thead>
+        <th>People you may know
+        </th>
+        <th>&nbsp;
+        </th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="person in people | orderBy : person">
+            <td>
+                {{person}}
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" ng-click="addFriend(person)">
+                    Add Friend
+                </button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

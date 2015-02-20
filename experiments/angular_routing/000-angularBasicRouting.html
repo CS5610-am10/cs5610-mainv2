@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Basic Routing</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.min.js"></script>
+    <script src="../../javascript/experiments/angular_routing/000-angularBasicRouting.js"></script>
+</head>
+<body ng-app="AngularBasicRoutingApp">
+    <div class="experiments-container">
+        <h1>Basic routing with AngularJS</h1>
+        <p>
+            This experiment is an introduction to routing with Angular.js and shows how we can use Angular.js to render
+            multiple views without actually reloading the html page.
+            Click on the 2 page links below and view different views without the page being reloaded.
+        </p>
+        <h4>Demo:</h4>
+        <nav>
+            <a href="#/page1">Page 1</a>
+            <a href="#/page2">Page 2</a>
+        </nav>
+        <div ng-view>
+        </div>
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+...
+<nav>
+    <a href="#/page1">Page 1</a>
+    <a href="#/page2">Page 2</a>
+</nav>
+<div ng-view>
+</div>
+</xmp>
+
+<b>Javascript:</b>
+<xmp>
+var app = angular.module('AngularBasicRoutingApp', ['ngRoute']);
+
+app.config(['$routeProvider',
+    function ($routeProvider) {
+        $routeProvider.
+            when('/page1', {
+                templateUrl: 'partials/page1.html'
+            }).
+            when('/page2', {
+                templateUrl: 'partials/page2.html'
+            }).
+            otherwise({
+                redirectTo : '/page1'
+            });
+    }]);
+...
+</xmp>
+            <p>
+                In order to use angular routing, the angular app module must depend on the 'ngRoute'module.
+                Also, as shown in the above script, the route provider is configured to display different views (html)
+                for different routes.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/chvgu67j27br6qn1brin13fcgp4" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="https://docs.angularjs.org/tutorial" target="_blank">AngularJS Official Tutorial</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/000-angularBasicRouting.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/partials/page1.html" target="_blank">Demo Page 1 HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/partials/page2.html" target="_blank">Demo Page 2 HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/000-angularBasicRouting.js" target="_blank">Routing Javascript</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

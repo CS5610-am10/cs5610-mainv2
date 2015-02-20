@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Routing Share Data</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.min.js"></script>
+    <script src="../../javascript/experiments/angular_routing/001-angularRoutingShareData.js"></script>
+    <script src="../../javascript/experiments/angular_routing/001-angularRoutingShareDataService.js"></script>
+
+</head>
+<body ng-app="AngularRoutingShareDataApp">
+    <div class="experiments-container">
+        <h1>AngularJS Routing : Share Data Between Views</h1>
+        <p>
+            The experiment demonstrates the use of AngularJS routing to use controllers on different views and share data
+            between the views using a routing service.
+            Below is a dummy social networking single page application. You can add friends on the home page and
+            click on the friends link to the view your friends. The home and the friends page are different views
+            shown on the same html page.
+        </p>
+        <h4>Demo:</h4>
+        <nav>
+            <a href="#/home">Home</a>
+            <a href="#/friends">Friends</a>
+        </nav>
+        <div ng-view>
+        </div>
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+...
+<nav>
+    <a href="#/page1">Page 1</a>
+    <a href="#/page2">Page 2</a>
+</nav>
+<div ng-view>
+</div>
+</xmp>
+
+<b>Javascript Routing:</b>
+<xmp>
+    var app = angular.module('AngularRoutingShareDataApp', ['ngRoute']);
+
+app.config(['$routeProvider',
+    function ($routeProvider) {
+        $routeProvider.
+            when('/home', {
+                templateUrl: 'fakebook/home.html',
+                controller: 'HomeController'
+            }).
+            when('/friends', {
+                templateUrl: 'fakebook/friends.html',
+                controller: 'FriendsController'
+            }).
+            otherwise({
+                redirectTo : '/home'
+            });
+    }]);
+
+app.controller("HomeController", function ($scope, FakebookService) {
+    $scope.people = FakebookService.getPeople();
+
+    ...
+});
+
+app.controller("FriendsController", function ($scope, FakebookService) {
+    ...
+});
+
+</xmp>
+<b>Javascript Routing Service:</b>
+<xmp>
+
+    app.factory('FakebookService', function fakebookService() {
+    var people = ['Abhimanyu', 'Tejas', 'Shreyas', 'Rishi'];
+    var friends = [];
+
+    var getPeople = function () {
+        return people;
+    }
+
+    var addFriend = function (person) {
+        ...
+    }
+
+    var removeFriend = function (person) {
+        ...
+    }
+
+    var getFriends = function () {
+        ...
+    }
+
+    return {
+        getPeople: getPeople,
+        addFriend: addFriend,
+        removeFriend: removeFriend,
+        getFriends: getFriends
+    }
+});
+</xmp>
+            <p>
+                The 'FakebookService' is a factory service used to share the people and the friends list between
+                the home and friends views. It can used in a similar manner as the $scope magic variable in the
+                controller.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/chvgu67j27br6qn1brin13fcgp4" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="https://docs.angularjs.org/tutorial" target="_blank">AngularJS Official Tutorial</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/001-angularRoutingShareData.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/fakebook/home.html" target="_blank">Demo Fakebook Home HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/fakebook/friends.html" target="_blank">Demo Fakebook Friends HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/001-angularRoutingShareData.js" target="_blank">Routing Javascript</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/001-angularRoutingShareDataService.js" target="_blank">Routing Service Javascript</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

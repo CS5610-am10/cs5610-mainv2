@@ -1,0 +1,22 @@
+﻿<h2>Fakebook Friends</h2>
+<table class="table-condensed" ng-show="friends">
+    <thead>
+        <th>My Friends
+        </th>
+        <th>&nbsp;
+        </th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="friend in friends">
+            <td>
+                {{friend}}
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" ng-click="removeFriend(friend)">
+                    Remove Friend
+                </button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

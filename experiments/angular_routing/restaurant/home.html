@@ -1,0 +1,17 @@
+﻿<h2>Welcome to Italian Kitchen</h2>
+<table class="table-condensed">
+    <thead>
+        <th>Menu
+        </th>
+        <th>&nbsp;
+        </th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="dish in dishes | orderBy : dish">
+            <td>
+                <a href="#/details/{{dish}}">{{dish}}</a>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
