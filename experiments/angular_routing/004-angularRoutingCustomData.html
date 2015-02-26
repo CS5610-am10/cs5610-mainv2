@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Routing Personalized</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.min.js"></script>
+    <script src="../../javascript/experiments/angular_routing/004-angularRoutingCustomData.js"></script>
+
+</head>
+<body ng-app="AngularRoutingCustomDataApp">
+
+    <div class="experiments-container">
+        <h1>AngularJS Routing with Custom Data</h1>
+        <p>
+           This experiment demonstrates setting static custom data in the route configuration for differnt routes in
+            AngularJS.             
+        </p>
+        <h4>Demo:</h4>
+        <nav>
+            <a href="#/page1">Page 1</a>
+            <a href="#/page2">Page 2</a>
+        </nav>
+        <div ng-view>
+        </div>
+        <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+        <xmp>
+<nav>
+    <a href="#/page1">Page 1</a>
+    <a href="#/page2">Page 2</a>
+</nav>
+<div ng-view>
+</div>
+</xmp>
+
+        <b>Javascript Routing:</b>
+        <xmp>
+var app = angular.module('AngularRoutingCustomDataApp', ['ngRoute']);
+
+app.config(['$routeProvider',
+    function ($routeProvider) {
+        $routeProvider.
+            when('/page1', {
+                templateUrl: 'partials/page1.html',
+                controller: 'Page1Controller',
+                footer: 'This is Page 1 footer'
+            }).
+            when('/page2', {
+                templateUrl: 'partials/page2.html',
+                controller: 'Page2Controller',
+                footer: 'This is Page 2 footer'
+            }).
+            otherwise({
+                redirectTo : '/page1'
+            });
+    }]);
+
+app.controller("Page1Controller", function ($scope, $route) {
+    $scope.footer = $route.current.footer;
+});
+
+app.controller("Page2Controller", function ($scope, $route) {
+    $scope.footer = $route.current.footer;
+});
+
+
+
+</xmp>
+        <p>
+            As you can see in the route configuration, a parameter 'footer' is set for routes for Page 1 and 2.
+            These parameters are currently hardcoded but we can easily have them dynamically assigned.
+            The parameters can be accessed in the respective controller as shown in the above snippet
+        </p>
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://docs.angularjs.org/api/ngRoute/service/$route" target="_blank">AngularJS $route documentation</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/004-angularRoutingCustomData.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/partials/page1.html" target="_blank">Demo Page 1 HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/partials/page2.html" target="_blank">Demo Page 2 HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/004-angularRoutingCustomData.js" target="_blank">Routing Javascript</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

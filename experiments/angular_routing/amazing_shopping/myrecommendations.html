@@ -1,0 +1,9 @@
+﻿<h2>My Recommendations</h2>
+<div ng-show="myRecommendations">
+    <ul class="list-group">
+        <li class="list-group-item-text" ng-repeat="recommendation in myRecommendations">{{recommendation}}</li>
+    </ul>
+</div>
+<div ng-hide="myRecommendations">
+    <b>No Recommendations to display</b>
+</div>

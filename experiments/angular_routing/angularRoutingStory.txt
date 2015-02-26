@@ -1,3 +1,5 @@
 ﻿000-angularBasicRouting.html	                                                  Basic routing with AngularJS
 001-angularRoutingShareData.html                                              AngularJS Routing : Share Data Between Views
 002-angularRoutingParameters.html	                                          AngularJS Routing with Parameters
+003-angularRoutingPersonalized.html	                                          AngularJS Routing Personalized
+004-angularRoutingCustomData.html	                                          AngularJS Routing with Custom Data

@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Angular Routing Personalized</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/angularExperiment.css" />
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.min.js"></script>
+    <script src="../../javascript/experiments/angular_routing/003-angularRoutingPersonalized.js"></script>
+
+</head>
+<body ng-app="AngularRoutingPersonalized">
+
+    <div class="experiments-container" ng-controller="PersonalizedController">
+        <h1>AngularJS Routing with Personalized Views</h1>
+        <p>
+            The experiment demonstrates a more complicated usecase of sharing data between different views using
+            angular routing and leveraging the show/hide attribute of AngularJS.
+            Try loggin as user: <b>alice, bob</b>
+             
+        </p>
+        <h4>Demo:</h4>
+        <nav class="navbar navbar-inverse">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/home">Amazing Shopping</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/home">Home</a></li>
+                    <li ng-show="isUserLoggedIn"><a href="#/myrecommendations">My Recommendations</a></li>
+                    <li ng-show="isUserLoggedIn"><a href="#/myorders">My Orders</a></li>
+                </ul>
+                <div class="navbar-form navbar-right" ng-hide="isUserLoggedIn">
+                    <div class="form-group">
+                        <input type="text" placeholder="Username" class="form-control" ng-model="username">
+                    </div>
+                    <button type="button" class="btn btn-success" ng-click="login()">Sign in</button>
+                </div>
+                <div class="navbar-form navbar-right navbar-brand" ng-show="isUserLoggedIn">
+                    Welcome {{username}} !!!
+                </div>
+            </div>
+            <!--/.nav-collapse -->
+        </nav>
+        <div ng-view>
+        </div>
+        <h4>Code snippet:</h4>
+
+        <b>HTML: </b>
+        <xmp>
+<nav class="navbar navbar-inverse">
+ <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#/home">Amazing Shopping</a>
+ </div>
+ <div id="Div1" class="collapse navbar-collapse">
+    <ul class="nav navbar-nav">
+        <li><a href="#/home">Home</a></li>
+        <li ng-show="isUserLoggedIn"><a href="#/myrecommendations">My Recommendations</a></li>
+        <li ng-show="isUserLoggedIn"><a href="#/myorders">My Orders</a></li>
+    </ul>
+    <div class="navbar-form navbar-right" ng-hide="isUserLoggedIn">
+        <div class="form-group">
+            <input type="text" placeholder="Username" class="form-control" ng-model="username">
+        </div>
+        <button type="button" class="btn btn-success" ng-click="login()">Sign in</button>
+   </div>
+   <div class="navbar-form navbar-right navbar-brand" ng-show="isUserLoggedIn">
+      Welcome {{username}} !!!
+   </div>
+  </div><!--/.nav-collapse -->
+</nav>
+<div ng-view>
+</div>
+</xmp>
+
+        <b>Javascript Routing and Service:</b>
+        <xmp>
+...
+app.controller("MyRecommendationsController", function ($scope, AmazingShoppingService) {
+    $scope.myRecommendations = AmazingShoppingService.getMyRecommendations();
+});
+
+app.controller("MyOrdersController", function ($scope, AmazingShoppingService) {
+    $scope.myOrders = AmazingShoppingService.getMyOrders();
+});
+
+app.controller("PersonalizedController", function ($scope, AmazingShoppingService) {
+    $scope.isUserLoggedIn = false;
+
+    $scope.login = function () {
+        console.log($scope.username);
+
+        AmazingShoppingService.login($scope.username);
+        $scope.isUserLoggedIn = true;
+    }
+});
+
+
+app.factory("AmazingShoppingService", function () {
+    var username = null;
+    var myOrders = null;
+    var myRecommendations = null;
+
+    var recommendations = [
+        {
+            "username": "alice",
+            "recommendations": ["Lenovo Z500 Laptop", "HP XYZ laptop bag", "Apple Juice"]
+        },
+        {
+            "username": "bob",
+            "recommendations": ["CK Jacket", "Northface Apex Bionic", "Godfather DVD - All Parts Pack"]
+        }
+    ];
+
+    var orders = [
+        {
+            "username": "alice",
+            "orders": ["Lenovo 769 Mouse", "Nature Valley Protein bar 10 pack box"]
+        },
+        {
+            "username": "bob",
+            "orders": ["Columbia windproof fleece", "Scarface DVD"]
+        }
+    ];
+
+    var login = function (name) {
+        username = name;
+        populateMyOrders(name);
+        populateMyRecommendations(name);
+    }
+
+    var populateMyOrders = function (name) {
+        for (var index in orders) {
+            if (orders[index].username == name) {
+                myOrders = orders[index].orders;
+                return;
+            }
+        }
+        myOrders = null;
+    }
+
+    var populateMyRecommendations = function (name) {
+        for (var index in recommendations) {
+            if (recommendations[index].username == name) {
+                myRecommendations = recommendations[index].recommendations;
+                return;
+            }
+        }
+        myRecommendations = null;
+    }
+
+    var getMyOrders = function () {
+        return myOrders;
+    }
+
+    var getMyRecommendations = function () {
+        return myRecommendations;
+    }
+
+    return {
+        login : login,
+        getMyOrders: getMyOrders,
+        getMyRecommendations: getMyRecommendations
+    }
+
+});
+
+
+</xmp>
+       
+        <p>
+            As you can see from the above code snippet, we can show and hide based on whether a particular value is set
+            in our model (javascript). Also, we populate the recommendations and orders list based on the user that logged in
+            by simply mapping those values to list for the user which is hardcoded for the experiment.
+        </p>
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/chvgu67j27br6qn1brin13fcgp4" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+                <li><a href="https://docs.angularjs.org/tutorial" target="_blank">AngularJS Official Tutorial</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/002-angularRoutingParameters.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/amazing_shopping/home.html" target="_blank">Amazing Shopping Home HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/amazing_shopping/myorders.html" target="_blank">Amazing Shopping My Orders HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/angular_routing/amazing_shopping/myrecommendations.html" target="_blank">Amazing Shopping My Recommendations HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/002-angularRoutingParameters.js" target="_blank">Routing Javascript</a></li>
+                <li><a href="../../fileview/Default.aspx?~/javascript/experiments/angular_routing/002-angularRoutingParametersService.js" target="_blank">Routing Service Javascript</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

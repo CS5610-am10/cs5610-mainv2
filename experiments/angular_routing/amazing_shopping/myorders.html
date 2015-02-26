@@ -1,0 +1,9 @@
+﻿<h2>My Orders</h2>
+<div ng-show="myOrders">
+    <ul class="list-group">
+        <li class="list-group-item-text" ng-repeat="order in myOrders">{{order}}</li>
+    </ul>
+</div>
+<div ng-hide="myOrders">
+    <b>No Orders to display</b>
+</div>

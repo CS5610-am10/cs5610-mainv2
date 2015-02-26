@@ -34,6 +34,7 @@
         <li><a href="story/index.htm?../experiments/story.txt" target="_blank">Experiments</a></li>
         <li><a href="blog/" target="_blank">Blog</a></li>
         <li><a href="#" onclick="alert('coming up!!!');">Project</a></li>
+        <li><a href="https://github.com/CS5610-am10/cs5610-mainv2" target="_blank">Github</a></li>
       
     </ul>
 
