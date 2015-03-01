@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Static HTML</title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1>Fetch Static HTML from NodeJS Server</h1>
+            <p>
+                This is an experiment to fetch a static HTML page in the 'public' folder on a NodeJS Server.
+                The below flight schedule data is hard-coded in the html page.
+            </p>
+        </div>
+
+        <div>
+            <!-- Example row of columns -->
+            <h2>Flight Schedule</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Airline</th>
+                        <th>Departure Time</th>
+                        <th>Terminal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>ORD</td>
+                        <td>BOS</td>
+                        <td>American</td>
+                        <td>06:55</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>BOS</td>
+                        <td>SEA</td>
+                        <td>United</td>
+                        <td>13:30</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>DFW</td>
+                        <td>JFK</td>
+                        <td>Southwest</td>
+                        <td>14:55</td>
+                        <td>6</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+     </div>
+</body>
+</html>

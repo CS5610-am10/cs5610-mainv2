@@ -6,3 +6,4 @@
 ../story/index.htm?../experiments/ajax/ajaxStory.txt       WEEK 5 (Part I) - AJAX, JSON
 ../story/index.htm?../experiments/angular/angularStory.txt       WEEK 5 (Part II) - Angular.js
 ../story/index.htm?../experiments/angular_routing/angularRoutingStory.txt       WEEK 6 - Routing with Angular.js
+../story/index.htm?../experiments/nodejs/nodeJSStory.txt       WEEK 7 - Node JS

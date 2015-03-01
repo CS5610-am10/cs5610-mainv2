@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/experiments/001-nodeDataFromAngular.js"></script>
+</head>
+<body ng-app="FlightDataApp">
+    <div class="container" ng-controller="FlightDataController">
+        <div>
+            <h1>NodeJS Server and Angular</h1>
+            <p>
+                This is an experiment to make an angular application and host it using Node JS and Express.
+                The below flight schedule data is binded to angular application javascript.
+            </p>
+        </div>
+
+        <div>
+            <!-- Example row of columns -->
+            <h2>Flight Schedule</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Airline</th>
+                        <th>Departure Time</th>
+                        <th>Terminal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="flightData in flightDataList">
+                        <td>{{flightData.origin}}</td>
+                        <td>{{flightData.destination}}</td>
+                        <td>{{flightData.airline}}</td>
+                        <td>{{flightData.departure}}</td>
+                        <td>{{flightData.terminal}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+</body>
+</html>

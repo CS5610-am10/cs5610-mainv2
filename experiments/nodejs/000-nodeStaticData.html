@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Introduction to Node JS and Express</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Introduction to Node JS and Express</h1>
+        <p>
+            This experiment is an introduction to use Node JS Server and Express web application framework. This experiment shows a simple fetch for
+            a html page. 
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <a href="http://cs5610-am10.rhcloud.com/000-nodeStaticData.html" target="_blank">Experiment on Openshift</a>&nbsp;
+            <div>
+                <div>Start the NodeJS Server:</div>
+                <img src="../../images/experiments/nodejs/startNodeServer.png" />
+            </div>&nbsp;
+            <div>
+                <div>Fetch static html page from NodeJS Server:</div>
+                <img src="../../images/experiments/nodejs/staticDataFromNode.png" />
+            </div>
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Static HTML</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container">
+            <div>
+                <h1>Fetch Static HTML from NodeJS Server</h1>
+                <p>
+                    This is an experiment to fetch a static HTML page in the 'public' 
+                    folder on a NodeJS Server.
+                    The below flight schedule data is hard-coded in the html page.
+                </p>
+            </div>
+
+            <div>
+                <!-- Example row of columns -->
+                <h2>Flight Schedule</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Airline</th>
+                            <th>Departure Time</th>
+                            <th>Terminal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>ORD</td>
+                            <td>BOS</td>
+                            <td>American</td>
+                            <td>06:55</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>BOS</td>
+                            <td>SEA</td>
+                            <td>United</td>
+                            <td>13:30</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>DFW</td>
+                            <td>JFK</td>
+                            <td>Southwest</td>
+                            <td>14:55</td>
+                            <td>6</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
+</xmp>
+
+<b>ServerJS:</b>
+<xmp>
+    var express = require('express');
+    var app = express();
+    app.use(express.static(__dirname + '/public'));
+    var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+    var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+    app.listen(port, ip);
+</xmp>
+            <p>
+                As you can see from the server js snippet, we create an express application and set the 'public' directory as the location
+                to look for static content for our website.
+                Since the node js server is hosted on openshift, we specify the IP and port to be env IP and env PORT if it is hosted on openshift 
+                or localhost ip (127.0.0.1) and port(3000) to use the server locally. 
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/c5dhnmr0if3v420vptjmn3ktd64" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/000-nodeStaticData.html" target="_blank">Static Experiment HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/000-nodeStaticData.html" target="_blank">Page HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

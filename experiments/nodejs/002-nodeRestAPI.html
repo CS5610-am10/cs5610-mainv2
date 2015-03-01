@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Node JS for REST API</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Node JS for REST API</h1>
+        <p>
+            This experiment shows how we can use Node JS Server as a REST API endpoint and request
+            entities. In this experiment, the entity defined in the server is flight schedule and we use
+            Node JS server to fetch all flights schedule as a JSON or a particular flight based on index.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <a href="http://cs5610-am10.rhcloud.com/flight_schedule" target="_blank">Fetch All Flights Scheduled</a>&nbsp;
+            <a href="http://cs5610-am10.rhcloud.com/flight_schedule/1" target="_blank">Fetch the first flight scheduled.</a>&nbsp;
+            <div>
+                <div>NodeJS to host REST API:</div>
+                <img src="../../images/experiments/nodejs/nodeRestAPI.png" />
+            </div>
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+<b>ServerJS:</b>
+<xmp>
+    var express = require('express');
+    var app = express();
+    
+    app.use(express.static(__dirname + '/public'));
+
+    var flightSchedule = [
+    {
+    "origin": "ORD",
+    "destination": "BOS",
+    "airline": "American",
+    "departure": "06:55",
+    "terminal": 2
+    },
+    {
+    "origin": "BOS",
+    "destination": "SEA",
+    "airline": "United",
+    "departure": "13:30",
+    "terminal": 5
+    },
+    {
+    "origin": "JFK",
+    "destination": "DFW",
+    "airline": "Southwest",
+    "departure": "20:00",
+    "terminal": 12
+    }
+    ];
+
+    app.get("/flight_schedule", function (req, res) {
+    res.json(flightSchedule);
+    });
+
+    app.get("/flight_schedule/:index", function (req, res) {
+    var idx = req.params.index;
+    res.json(flightSchedule[idx]);
+    });
+
+    
+    app.listen(port, ip);
+</xmp>
+            <p>
+                As you can see from the above snippet, we have two get end points defined:
+                <ol>
+                    <li>
+                        'flight_schedule' to list all the flights scheduled
+                    </li>
+                    <li>
+                        'flight_schedule/index' to list the flight at a particular index in the scheduled list.
+                    </li>
+                </ol>
+                The server is listening to these endpoints and responds with a JSON of the the pre-defined
+                flight schedule information.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/c5dhnmr0if3v420vptjmn3ktd64" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/002-nodeRestAPI.html" target="_blank">Page HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

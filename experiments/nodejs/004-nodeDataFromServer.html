@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Handling Entities with Node JS</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Handling Entities with Node JS</h1>
+        <p>
+            This experiment shows how we can perform not only get, but delete and create on entities hosted
+            by the Node JS Server.
+            This experiment shows how we can add new flight schedules and delete existing flights from
+            the schedule. The flight schedule list is maintained on the Node JS server.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <a href="http://cs5610-am10.rhcloud.com/002-nodeDataFromServer.html" target="_blank">Experiment on Openshift</a>
+            
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Handling Entities with NodeJS</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-route.js"></script>
+        <script src="js/experiments/002-nodeDataFromServer.js"></script>
+    </head>
+    <body ng-app="FlightDataApp">
+        <div class="container" ng-controller="FlightDataController">
+            <div>
+                <h1>Handling Entities with NodeJS</h1>
+                <p>
+                    This experiment shows how we can perform not only get, but delete and create on entities hosted
+                    by the Node JS Server.
+                </p>
+            </div>
+            <div>
+                <!-- Example row of columns -->
+                <h2>Flight Schedule</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Airline</th>
+                            <th>Departure Time</th>
+                            <th>Terminal</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" ng-model="flight.origin" /></td>
+                            <td><input type="text" ng-model="flight.destination" /></td>
+                            <td><input type="text" ng-model="flight.airline" /></td>
+                            <td><input type="text" ng-model="flight.departure" placeholder="hh:mm" /></td>
+                            <td><input type="text" ng-model="flight.terminal" /></td>
+                            <td>
+                                <button type="button" class="btn btn-success pull-right" ng-click="addFlight(flight)">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="flightData in flightDataList">
+                            <td>{{flightData.origin}}</td>
+                            <td>{{flightData.destination}}</td>
+                            <td>{{flightData.airline}}</td>
+                            <td>{{flightData.departure}}</td>
+                            <td>{{flightData.terminal}}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger pull-right" ng-click="removeFlight($index)">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+    
+</xmp>
+
+<b>Client App JS:</b>
+<xmp>
+    var app = angular.module("FlightDataApp", []);
+
+    app.controller("FlightDataController", function ($scope, $http) {
+    $http.get("flight_schedule")
+    .success(function (response) {
+    $scope.flightDataList = response;
+    });
+
+    $scope.removeFlight = function (index) {
+    $http.delete("flight_schedule/" + index)
+    .success(function (response) {
+    $scope.flightDataList = response;
+    });
+    }
+
+    $scope.addFlight = function (flight) {
+    $http.post("flight_schedule", flight)
+    .success(function (response) {
+    $scope.flightDataList = response;
+    });
+    }
+    });
+</xmp>
+
+<b>ServerJS:</b>
+<xmp>
+    var express = require('express');
+    var app = express();
+    var bodyParser = require('body-parser');
+    var multer = require('multer');
+    var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+    var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+    app.use(bodyParser.json()); // for parsing application/json
+    app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+    app.use(multer()); // for parsing multipart/form-data
+    app.use(express.static(__dirname + '/public'));
+
+    var flightSchedule = [...];
+
+    app.get("/flight_schedule", function (req, res) {
+    res.json(flightSchedule);
+    });
+
+    app.get("/flight_schedule/:index", function (req, res) {
+    var idx = req.params.index;
+    res.json(flightSchedule[idx]);
+    });
+
+    app.delete("/flight_schedule/:index", function (req, res) {
+    var idx = req.params.index;
+    flightSchedule.splice(idx, 1);
+    res.json(flightSchedule);
+    });
+
+    app.post("/flight_schedule", function (req, res) {
+    var obj = req.body;
+    flightSchedule.push(obj);
+    res.json(flightSchedule);
+    });
+
+    app.listen(port, ip);
+</xmp>
+            <p>
+                As you can see from the above snippet, we have two get end points and a delete and post enpoint defined:
+                <ol>
+                    <li>
+                        GET 'flight_schedule' to get all the flights scheduled
+                    </li>
+                    <li>
+                        GET 'flight_schedule/index' to get the flight at a particular index in the scheduled list.
+                    </li>
+                    <li>
+                        DELETE 'flight_schedule/index' to delete the flight at a particular index in the scheduled list.
+                    </li>
+                    <li>
+                        POST 'flight_schedule' to add a new flight to the scheduled list.
+                    </li>
+                </ol>
+                In all the above endpoints the server responds with a JSON of the current flight schedule
+                list which it maintains locally.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/c5dhnmr0if3v420vptjmn3ktd64" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/002-nodeDataFromServer.html" target="_blank">Static Experiment HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/002-nodeDataFromServer.js" target="_blank">Angular JS</a></li>
+                
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/004-nodeDataFromServer.html" target="_blank">Page HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Node JS and Angular</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+</head>
+<body>
+    <div class="experiments-container">
+        <h1>Node JS and Angular</h1>
+        <p>
+            This experiment shows how we can use Angular JS in our application hosted using Node JS and Express.
+            The flight schedule data displayed in the demo is returned as a pre-defined value from the
+            javascript.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <a href="http://cs5610-am10.rhcloud.com/001-nodeDataFromAngular.html" target="_blank">Experiment on Openshift</a>&nbsp;
+            <div>
+                <div>NodeJS Server to host Angular Applications:</div>
+                <img src="../../images/experiments/nodejs/nodeAndAngular.png" />
+            </div>
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+<b>HTML: </b>
+<xmp>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-route.js"></script>
+        <script src="js/experiments/001-nodeDataFromAngular.js"></script>
+    </head>
+    <body ng-app="FlightDataApp">
+        <div class="container" ng-controller="FlightDataController">
+            <div>
+                <h1>NodeJS Server and Angular</h1>
+                <p>
+                    This is an experiment to make an angular application and host it using Node JS and Express.
+                    The below flight schedule data is binded to angular application javascript.
+                </p>
+            </div>
+
+            <div>
+                <!-- Example row of columns -->
+                <h2>Flight Schedule</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Airline</th>
+                            <th>Departure Time</th>
+                            <th>Terminal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="flightData in flightDataList">
+                            <td>{{flightData.origin}}</td>
+                            <td>{{flightData.destination}}</td>
+                            <td>{{flightData.airline}}</td>
+                            <td>{{flightData.departure}}</td>
+                            <td>{{flightData.terminal}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+    
+</xmp>
+
+<b>Client App JS:</b>
+<xmp>
+    var app = angular.module("FlightDataApp", []);
+
+    app.controller("FlightDataController", function ($scope) {
+    var flightDataList = [
+    {
+    "origin": "ORD",
+    "destination": "BOS",
+    "airline": "American",
+    "departure": "06:55",
+    "terminal" : 2
+    },
+    {
+    "origin": "BOS",
+    "destination": "SEA",
+    "airline": "United",
+    "departure": "13:30",
+    "terminal": 5
+    },
+    {
+    "origin": "JFK",
+    "destination": "DFW",
+    "airline": "Southwest",
+    "departure": "20:00",
+    "terminal": 12
+    }
+    ];
+    console.log(flightDataList)
+    $scope.flightDataList = flightDataList;
+    });
+</xmp>
+
+<b>ServerJS:</b>
+<xmp>
+    var express = require('express');
+    var app = express();
+    app.use(express.static(__dirname + '/public'));
+    var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+    var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+    app.listen(port, ip);
+</xmp>
+            <p>
+                The ServerJS is similar to the one in the first experiment, but now we have an
+                angular application and the flight schedule data is binded to a list which is pre-defined
+                in the client javascript.
+            </p>
+
+             <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/c5dhnmr0if3v420vptjmn3ktd64" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/001-nodeDataFromAngular.html" target="_blank">Static Experiment HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/001-nodeDataFromAngular.js" target="_blank">Angular JS</a></li>
+                
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/001-nodeDataFromAngular.html" target="_blank">Page HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+
+        
+
+    </div>
+
+</body>
+</html>

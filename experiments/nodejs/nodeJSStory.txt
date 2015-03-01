@@ -1,0 +1,5 @@
+﻿000-nodeStaticData.html	                                                  Introduction to Node JS and Express
+001-nodeDataFromAngular.html	                                          Node JS and Angular
+002-nodeRestAPI.html	                                                  Node JS for REST API
+003-nodeAjaxOpenShift.html	                                             AJAX call for data hosted on Node JS Server
+004-nodeDataFromServer.html												Handling Entities with Node JS

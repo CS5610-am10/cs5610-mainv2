@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.js"></script>
+    <script src="js/experiments/002-nodeDataFromServer.js"></script>
+</head>
+<body ng-app="FlightDataApp">
+    <div class="container" ng-controller="FlightDataController">
+      <!-- Example row of columns -->
+        <h2>Flight Schedule</h2>
+       <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Airline</th>
+          <th>Departure Time</th>
+          <th>Terminal</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td><input type="text" ng-model="flight.origin" /></td>
+            <td><input type="text" ng-model="flight.destination" /></td>
+            <td><input type="text" ng-model="flight.airline" /></td>
+            <td><input type="text" ng-model="flight.departure" placeholder="hh:mm"/></td>
+            <td><input type="text" ng-model="flight.terminal" /></td>
+            <td>
+                <button type="button" class="btn btn-success pull-right" ng-click="addFlight(flight)">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-repeat="flightData in flightDataList">
+          <td>{{flightData.origin}}</td>
+          <td>{{flightData.destination}}</td>
+          <td>{{flightData.airline}}</td>
+          <td>{{flightData.departure}}</td>
+          <td>{{flightData.terminal}}</td>
+          <td>
+                <button type="button" class="btn btn-danger pull-right" ng-click="removeFlight($index)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+          </td>  
+        </tr>
+      </tbody>
+    </table>
+        </div>
+</body>
+</html>
