@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/bootstrap.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../../javascript/experiments/mongodb/000-mongoDBFetch.js"></script>
+</head>
+<body ng-app="CourseApp">
+    <div class="experiments-container" ng-controller="CourseAppController">
+        <h1>MongoDB, NodeJS and Angular - Basic fetch from database</h1>
+        <p>
+            This experiment is an introduction to MongoDB and in particular fetching data with 'mongoose' module
+            from MongoDB in NodeJS server script. A client application is created with AngularJS to display the 
+            information fetched from the server.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            
+            <strong>Courses - Spring 2015</strong>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Professor</th>
+                        <th>Day(s)</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="course in courses">
+                        <td>{{course.code}}</td>
+                        <td>{{course.name}}</td>
+                        <td>{{course.professor}}</td>
+                        <td>{{course.day}}</td>
+                        <td>{{course.time}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Code snippet:</h4>
+<strong>Course Data</strong>
+<xmp>
+    PS C:\Users\Ankit> rhc ssh cs5610
+    [cs5610-am10.rhcloud.com 54f2b2c9fcf93364e000010c]\> mongo
+    MongoDB shell version: 2.4.9
+    connecting to: 127.9.170.130:27017/admin
+    Welcome to the MongoDB shell.
+    > show dbs
+    admin   0.03125GB
+    cs5610  0.03125GB
+    local   0.03125GB
+    > use cs5610
+    switched to db cs5610
+    > db.course.insert({code:'CS5610', name:'Web Development', professor:'Jose Annunziato', day:'WF', time:'11:30'})
+    > db.course.insert({code:'CS6240', name:'Parallel Data Processing', professor:'Mirek Riedewald', day:'T', time:'18:00'})
+    > db.course.insert({code:'CS5700', name: 'Fundamentals of Computer Networking', professor:'David Choffnes', day:'M',time
+    db.course.insert({code:'CS5700', name: 'Fundamentals of Computer Networking', professor:'David Choffnes', day:'M',time
+    :'18:00'})
+    > db.course.find().pretty()
+    {
+    "_id" : ObjectId("54f77169bb31194ad366266d"),
+    "code" : "CS5610",
+    "name" : "Web Development",
+    "professor" : "Jose Annunziato",
+    "day" : "WF",
+    "time" : "11:30"
+    }
+    {
+    "_id" : ObjectId("54f7721bb62aca7634f77f78"),
+    "code" : "CS6240",
+    "name" : "Parallel Data Processing",
+    "professor" : "Mirek Riedewald",
+    "day" : "T",
+    "time" : "18:00"
+    }
+    {
+    "_id" : ObjectId("54f77291371dc47684035885"),
+    "code" : "CS5700",
+    "name" : "Fundamentals of Computer Networking",
+    "professor" : "David Choffnes",
+    "day" : "M",
+    "time" : "18:00"
+    }
+    >
+</xmp>
+<strong>NodeJS Server</strong>
+<xmp>
+    var mongoose = require('mongoose');
+    var userName = process.env.OPENSHIFT_MONGODB_DB_USERNAME || '****';
+    var password = process.env.OPENSHIFT_MONGODB_DB_PASSWORD || '*********';
+    var mongoDBHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost';
+    var mongoDBPort = process.env.OPENSHIFT_MONGODB_DB_PORT || '27017';
+    var uri = 'mongodb://' + userName + ':' + password + '@' + mongoDBHost + ':' + mongoDBPort + '/cs5610';
+    console.log(uri);
+    mongoose.connect(uri);
+
+    var CourseSchema = new mongoose.Schema({
+        code: String,
+        name: String,
+        professor: String,
+        day: String,
+        time: String
+    }, {collection:'course'});
+
+    var Course = mongoose.model("Course", CourseSchema);
+    ...
+    app.get('/course', function (req, res) {
+        Course.find(function (err, data) {
+            res.jsonp(data);
+        });
+    });
+</xmp>
+<strong>Client App JS</strong>
+<xmp>
+    var app = angular.module("CourseApp", []);
+    app.controller("CourseAppController", function ($scope, $http) {
+    $http.jsonp("http://cs5610-am10.rhcloud.com/course?callback=JSON_CALLBACK").
+    success(function (courses) {
+        $scope.courses = courses;
+    });
+    })
+</xmp>
+<strong>HTML</strong>
+<xmp>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Professor</th>
+                <th>Day(s)</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in courses">
+                <td>{{course.code}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.professor}}</td>
+                <td>{{course.day}}</td>
+                <td>{{course.time}}</td>
+            </tr>
+        </tbody>
+    </table>
+</xmp>
+        <p>
+            The activities performed for this experiment are shown in order in the above code snippets: first
+            the data is setup using the mongo cli, then mongoose module in node js server scipt is used to
+            fetch the course data and expose it via the '/course' api. Finally, the courses table is rendered 
+            through an angular client app which fetches the JSON from the server.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/csksosl4c7a8550oc73enmo5p04" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                
+                <li><a href="../../fileview/Default.aspx?~/experiments/mongodb/000-mongoDBFetch.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/mongodb/000-mongoDBFetch.js" target="_blank">Angular JS</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

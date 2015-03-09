@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/bootstrap.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../../javascript/experiments/mongodb/001-mongoDBInsertDelete.js"></script>
+</head>
+<body ng-app="CourseApp">
+    <div class="experiments-container" ng-controller="CourseAppController">
+        <h1>MongoDB, NodeJS and Angular - Insert and Delete data in database</h1>
+        <p>
+            This experiment shows how we can perform inserts and delete on data in mongodb using the mongoose 
+            module in node js.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <strong>Courses - Spring 2015</strong>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Professor</th>
+                        <th>Day(s)</th>
+                        <th>Time</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" ng-model="course.code" /></td>
+                        <td><input type="text" ng-model="course.name" /></td>
+                        <td><input type="text" ng-model="course.professor" /></td>
+                        <td><input type="text" ng-model="course.day" placeholder="M/T/W/R/F" /></td>
+                        <td><input type="text" ng-model="course.time" placeholder="hh:mm"/></td>
+                        <td>
+                            <button type="button" class="btn btn-success pull-right" ng-click="addCourse(course)">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="course in courses">
+                        <td>{{course.code}}</td>
+                        <td>{{course.name}}</td>
+                        <td>{{course.professor}}</td>
+                        <td>{{course.day}}</td>
+                        <td>{{course.time}}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger pull-right" ng-click="removeCourse(course._id)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>  
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Code snippet:</h4>
+<strong>NodeJS Server</strong>
+<xmp>
+    var mongoose = require('mongoose');
+    var userName = process.env.OPENSHIFT_MONGODB_DB_USERNAME || '****';
+    var password = process.env.OPENSHIFT_MONGODB_DB_PASSWORD || '*********';
+    var mongoDBHost = process.env.OPENSHIFT_MONGODB_DB_HOST || 'localhost';
+    var mongoDBPort = process.env.OPENSHIFT_MONGODB_DB_PORT || '27017';
+    var uri = 'mongodb://' + userName + ':' + password + '@' + mongoDBHost + ':' + mongoDBPort + '/cs5610';
+    console.log(uri);
+    mongoose.connect(uri);
+
+    var CourseSchema = new mongoose.Schema({
+        code: String,
+        name: String,
+        professor: String,
+        day: String,
+        time: String
+    }, {collection:'course'});
+
+    var Course = mongoose.model("Course", CourseSchema);
+    ...
+    app.get('/course', function (req, res) {
+        Course.find(function (err, data) {
+            res.jsonp(data);
+        });
+    });
+    app.post('/course', function (req, res) {
+        var course = new Course(req.body);
+        course.save(function (err, data) {
+            Course.find(function (err, data) {
+                res.jsonp(data);
+            });
+       });
+    });
+
+    app.delete('/course/:id', function (req, res) {
+        Course.remove({ _id: req.params.id }, function (err, count) {
+            Course.find(function (err, data) {
+                res.jsonp(data);
+            });
+        });
+    });
+</xmp>
+<strong>Client App JS</strong>
+<xmp>
+    var app = angular.module("CourseApp", []);
+    app.controller("CourseAppController", function ($scope, $http) {
+    ...
+
+    $scope.removeCourse = function (id) {
+        $http.delete("http://cs5610-am10.rhcloud.com/course/" + id).
+        success(function (courses) {
+            $scope.courses = courses;
+        });
+    }
+
+    $scope.addCourse = function (course) {
+        $http.post("http://cs5610-am10.rhcloud.com/course/", course).
+        success(function (courses) {
+        $scope.courses = courses;
+            $scope.course = {}
+        });
+    }
+    })
+</xmp>
+        <p>
+            The server js exposes the post and the delete api for the course data in mongodb. The import thing to note in the these api is
+            the nesting of remove and find calls on the data model (in case of the delete api). This is important because the calls are asynchronous.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/csksosl4c7a8550oc73enmo5p04" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/mongodb/001-mongoDBInsertDelete.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/mongodb/001-mongoDBInsertDelete.js" target="_blank">Angular JS</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

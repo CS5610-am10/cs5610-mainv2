@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../css/bootstrap.css" rel="stylesheet" />
+    <link href="../../css/experiments.css" rel="stylesheet" />
+    
+    <link href="../../css/t" rel="stylesheet" />
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../../javascript/experiments/mongodb/003-mongoDBParentChild.js"></script>
+</head>
+<body ng-app="ProductApp">
+
+    <div class="experiments-container" ng-controller="ProductAppController">
+        <h1>MongoDB and NodeJS - Handling Search on Embedded Documents</h1>
+        <p>
+            This experiment shows how we can handle parent-child child relationship in nested schema in
+            MongoDB.&nbsp;
+            As an example for this experiment, I have create a bunch of product categories and products in
+            each category is a child entity.&nbsp;
+            In the below search box we can select a product category and search for products in that category.
+            the search box takes regular expresion. If you search in a product category without providing
+            the query string, it will list all the products in that category.&nbsp;
+        </p>
+        <h4>Demo:</h4>
+
+        <div>
+            <div >
+                <label>Search:</label>
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <select data-ng-model="currentProductCategory"
+                                data-ng-options="productCategory.name for productCategory in productCategories"
+                                class="btn btn-info"></select>
+                            
+                    </div>
+                    <input type="text" class="form-control" ng-model="productSearchString" aria-label="...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="searchProducts()">Go!</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+            <div ng-show="products.length > 0">
+                <label>Products:</label>
+                <ol>
+                    <li ng-repeat="product in products">{{product.name}}</li>
+                </ol>
+            </div>
+            <div ng-hide="productsFound">No products found</div>
+        </div><!-- /.row -->
+        <h4>Code snippet:</h4>
+<strong>NodeJS Server</strong>
+<xmp>
+    var ProductSchema = new mongoose.Schema({
+        name: String,
+        price: Number
+    });
+    var ProductCategorySchema = new mongoose.Schema({
+        name: String,
+        products: [ProductSchema]
+    }, {collection: 'product_category'});
+
+    var ProductCategory = mongoose.model("ProductCategory", ProductCategorySchema)
+    var Product = mongoose.model("Product", ProductSchema);
+
+    app.get('/product_category', function (req, res) {
+        ProductCategory.find(function (err, data) {
+            res.jsonp(data);
+        });
+    });
+
+    app.get('/product_category/:id/product', function (req, res) {
+        var parts = url.parse(req.url, true);
+        var searchString = parts.query.search;
+        if (searchString === 'undefined') {
+            searchString = '.*';
+        };
+        
+        ProductCategory.findById(req.params.id, function (err, data) {
+            filtered = [];
+            for (var index = 0; index < data.products.length; index++) {
+                var product = data.products[index];
+                var match = product.name.search(new RegExp(searchString, "i"));
+                if (match > -1) {
+                    filtered.push(product);
+                }
+            }
+    
+            res.jsonp(filtered);
+        });
+    });
+</xmp>
+
+<strong>Client App JS</strong>
+<xmp>
+    $scope.productsFound = true;
+    
+    $http.jsonp("http://cs5610-am10.rhcloud.com/product_category?callback=JSON_CALLBACK").
+    success(function (productCategories) {
+        $scope.productCategories = productCategories;
+        $scope.currentProductCategory = productCategories[0];
+    });
+
+    $scope.searchProducts = function () {
+        $http.jsonp("http://cs5610-am10.rhcloud.com/product_category/"+$scope.currentProductCategory._id+
+                "/product?search="+$scope.productSearchString+"&callback=JSON_CALLBACK").
+        success(function (products) {
+            $scope.products = products;
+            if (products.length < 1) {
+                $scope.productsFound = false;
+            } else {
+                $scope.productsFound = true;
+            }
+        });
+    }
+</xmp>
+        <p>
+            As shown in the above script, we can easily embed 'ProductSchema' within the 'ProductCategorySchema' the node js server script.
+            Also, 'url' module is used to parse the request parameters in the url.
+            The product child entity is accessed through a nested REST Api end point: 'product_category/id/product'.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/csksosl4c7a8550oc73enmo5p04" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/mongodb/003-mongoDBParentChild.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/mongodb/003-mongoDBParentChild.js" target="_blank">Angular JS</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>

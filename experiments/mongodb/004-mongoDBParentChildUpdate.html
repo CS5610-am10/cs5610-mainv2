@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../css/bootstrap.css" rel="stylesheet" />
+    <link href="../../css/experiments.css" rel="stylesheet" />
+    
+    <link href="../../css/t" rel="stylesheet" />
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../../javascript/experiments/mongodb/004-mongoDBParentChildUpdate.js"></script>
+</head>
+<body ng-app="ProductApp">
+
+    <div class="experiments-container" ng-controller="ProductAppController">
+        <h1>MongoDB and NodeJS - Handling Updates on Embedded Documents</h1>
+        <p>
+            This experiment shows how we can handle add/insert, delete and updates on embedded documents in
+            a parent-child schema.
+        </p>
+        <h4>Demo:</h4>
+
+        <div class="input-group">
+            
+                <select data-ng-model="currentProductCategory"
+                        data-ng-options="productCategory.name for productCategory in productCategories"
+                        class="btn btn-primary" ng-change="updateCurrentProduct()">
+                </select>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>Availability</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" ng-model="newProduct.name" /></td>
+                        <td><input type="text" ng-model="newProduct.price" /></td>
+                        <td><input type="text" ng-model="newProduct.count" /></td>
+                        <td>
+                            <button type="button" class="btn btn-success pull-right" ng-click="addProduct(newProduct)">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="product in products | orderBy: product.name">
+                        <td>{{product.name}}</td>
+                        <td>{{product.price}}</td>
+                        <td>
+                            <button type="button" class="btn btn-default" ng-click="incrementProductCount($index)">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </button>
+                                {{product.count}}
+                            <button type="button" class="btn btn-default" ng-click="decrementProductCount($index)">
+                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger pull-right" ng-click="removeProduct(product._id)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h4>Code snippet:</h4>
+<strong>NodeJS Server</strong>
+<xmp>
+    app.put('/product_category/:id/product/:pid', function (req, res) {
+        var product = req.body;
+        ProductCategory.findById(req.params.id, function (err, data) {
+            var dbProduct = data.products.id(req.params.pid)
+            dbProduct.name = product.name;
+            dbProduct.price = product.price;
+            dbProduct.count = product.count;
+            data.save(function (err, data) {
+                res.jsonp(data.products.id(req.params.pid));
+            })
+        });
+    });
+
+    app.delete('/product_category/:id/product/:pid', function (req, res) {
+        ProductCategory.findById(req.params.id, function (err, data) {
+            data.products.id(req.params.pid).remove();
+            data.save(function (err, data) {
+                res.jsonp(data.products);
+            })
+        });
+    });
+
+
+    app.post('/product_category/:id', function (req, res) {
+        var product = req.body;
+        ProductCategory.findById(req.params.id, function (err, data) {
+            data.products.push(product);
+            data.save(function (err, data) {
+                res.jsonp(data.products);
+            });
+        });
+    });
+</xmp>
+
+<strong>Client App JS</strong>
+<xmp>
+    
+    var app = angular.module("ProductApp", []);
+
+    app.factory('ProductService', function ($http) {
+    var findAll = function (callback) {
+        $http.jsonp("http://cs5610-am10.rhcloud.com/product_category?callback=JSON_CALLBACK").
+        success(callback);
+    }
+
+    var incrementProductCount = function (productCategoryId, product, callback) {
+        product.count = product.count + 1;
+        $http.put("http://cs5610-am10.rhcloud.com/product_category/"+ productCategoryId + "/product/" + product._id, product).
+        success(callback);
+    }
+
+    var decrementProductCount = function (productCategoryId, product, callback) {
+        product.count = product.count - 1;
+        $http.put("http://cs5610-am10.rhcloud.com/product_category/" + productCategoryId + "/product/" + product._id, product).
+        success(callback);
+    }
+
+    var removeProduct = function (productCategoryId, productId, callback) {
+        $http.delete("http://cs5610-am10.rhcloud.com/product_category/" + productCategoryId + "/product/" + productId).
+        success(callback);
+    }
+
+    var addProduct = function (productCategoryId, product, callback) {
+        $http.post("http://cs5610-am10.rhcloud.com/product_category/" + productCategoryId , product).
+        success(callback);
+    }
+
+    return {
+        findAll: findAll,
+        incrementProductCount: incrementProductCount,
+        addProduct: addProduct,
+        removeProduct: removeProduct
+    }
+    });
+    app.controller("ProductAppController", function ($scope, $http, ProductService) {
+
+    ProductService.findAll(function (productCategories) {
+        $scope.productCategories = productCategories;
+        var currentProductCategory = productCategories[0];
+        $scope.currentProductCategory = currentProductCategory;
+        $scope.products = currentProductCategory.products;
+    })
+
+    $scope.updateCurrentProduct = function () {
+        $scope.products = $scope.currentProductCategory.products;
+    }
+
+    $scope.incrementProductCount = function (index) {
+        ProductService.incrementProductCount($scope.currentProductCategory._id,
+            $scope.products[index], function (product) {
+                $scope.products[index] = product;
+            })
+    }
+
+    $scope.decrementProductCount = function (index) {
+        ProductService.decrementProductCount($scope.currentProductCategory._id,
+            $scope.products[index], function (product) {
+                $scope.products[index] = product;
+            })
+    }
+
+    $scope.addProduct = function (newProduct) {
+        ProductService.addProduct($scope.currentProductCategory._id,
+            newProduct, function (products) {
+                $scope.products = products;
+            })
+    }
+
+    $scope.removeProduct = function (productId) {
+        ProductService.removeProduct($scope.currentProductCategory._id,
+            productId, function (products) {
+                $scope.products = products;
+            })
+    }
+    })
+</xmp>
+        <p>
+            As shown in the above script, we can easily fetch an embedded document by id and if we wish to remove it, remove() function
+            on the object reference can be used.&nbsp;
+            I have used a factory service within the angular application. This helps in sharing the 'ProductService' functions
+            with different controllers in the application.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/csksosl4c7a8550oc73enmo5p04" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                <li><a href="../../fileview/Default.aspx?~/experiments/mongodb/004-mongoDBParentChildUpdate.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/mongodb/004-mongoDBParentChildUpdate.js" target="_blank">Angular JS</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

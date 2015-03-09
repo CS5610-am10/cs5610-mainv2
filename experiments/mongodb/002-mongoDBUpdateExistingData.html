@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../../css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/bootstrap.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../../javascript/experiments/mongodb/002-mongoDBUpdate.js"></script>
+</head>
+<body ng-app="NoteApp">
+    <div class="experiments-container" ng-controller="NoteAppController">
+        <h1>MongoDB, NodeJS and Angular - Update data in database</h1>
+        <p>
+            This experiment shows how we can perform updates on exisiting data in mongodb using the mongoose 
+            module in node js.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <strong>Add a Note</strong>
+            <div>
+                <div>
+                    Name:
+                    <input type="text" ng-model="note.name" />
+                </div>
+                &nbsp;
+                <div>
+                    Enter Note:
+                    <textarea ng-model="note.text"></textarea>
+                </div>
+                
+            </div>
+            
+                <div>
+                    <button type="button" class="btn btn-success" ng-click="addNote(note)">
+                        Add Note
+                    </button>
+                </div>
+            
+            &nbsp;&nbsp;
+            <div>
+                
+                <strong>My Notes</strong>
+                <table ng-show="notes.length>0" class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Note</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="note in notes | orderBy: note._id">
+                            <td ng-hide="editable[note._id]">
+                                {{note.name}}
+                            </td>
+                            <td ng-show="editable[note._id]">
+                                <input type="text" ng-model="editable[note._id].name" />
+                            </td>
+                            <td ng-hide="editable[note._id]">
+                                {{note.text}}
+                            </td>
+                            <td ng-show="editable[note._id]">
+                                <textarea type="text" ng-model="editable[note._id].text"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-default pull-right" ng-click="editNote(note)" ng-hide="editable[note._id]">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default pull-right" ng-click="saveNote(note._id, editable[note._id])" ng-show="editable[note._id]">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-danger pull-right" ng-click="removeNote(note._id)">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <span ng-hide="notes.length>0">No notes to display</span>
+        </div>
+        <h4>Code snippet:</h4>
+<strong>NodeJS Server</strong>
+<xmp>
+    var NoteSchema = new mongoose.Schema({
+        name: String,
+        text: String
+    }, { collection: 'note' });
+    app.put('/note/:id', function (req, res) {
+        var note = req.body;
+        Note.findById(req.params.id, function (err, data) {
+            data.name = note.name;
+            data.text = note.text;
+            data.save(function (err, data) {
+                Note.find(function (err, data) {
+                    res.jsonp(data);
+                });
+            });
+        });
+    });
+</xmp>
+
+<strong>Client App JS</strong>
+<xmp>
+    var app = angular.module("NoteApp", []);
+    app.controller("NoteAppController", function ($scope, $http) {
+    $http.jsonp("http://localhost:3000/note?callback=JSON_CALLBACK").
+    success(function (notes) {
+        $scope.notes = notes;
+    });
+
+    $scope.editable = {}
+    $scope.editNote = function (note) {
+        $scope.editable[note._id] = {name: note.name, text: note.text};
+    }
+
+    $scope.saveNote = function (id, note) {
+        $http.put("http://localhost:3000/note/" + id, note).
+            success(function (notes) {
+                $scope.notes = notes;
+                $scope.editable[id] = false;
+            });
+        }
+    })
+</xmp>
+        <p>
+            The important api in this experiment is the 'put' api. At the server side, we fetch the note object using the 'findById' call. 
+            This object is updated with the values send in the request body and saved again.
+        </p>
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/csksosl4c7a8550oc73enmo5p04" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>
+                
+                <li><a href="../../fileview/Default.aspx?~/experiments/mongodb/002-mongoDBUpdateExistingData.html" target="_blank">HTML</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/public/js/experiments/mongodb/002-mongoDBUpdateExistingData.js" target="_blank">Angular JS</a></li>
+                <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                <li><a href="../../fileview/Default.aspx?~/experiments/nodejs/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
