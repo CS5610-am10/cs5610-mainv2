@@ -1,0 +1,16 @@
+﻿<div ng-controller="LoginCtrl">
+    <h4>{{errorMessage}}</h4>
+
+    <div>Please use the following existing credentials:</div>
+    <ul>
+        <li>Username: alice, Password: alice</li>
+        <li>Username: bob, Password: bob</li>
+        <li>Username: charlie, Password: charlie</li>
+    </ul>
+    <h1>Login</h1>
+    <div>
+        <input ng-model="user.username" /><br />
+        <input type="password" ng-model="user.password" /><br />
+        <button ng-click="login(user)">Login</button>
+    </div>
+</div>

@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customized User Profile - PassportJS Authentication</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/experiments.css" />
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/angular-route.js"></script>
+    <script src="../js/experiments/passport_project/001-passportAuthCustomUserProfile.js"></script>
+    <script src="views/login/login.js"></script>
+    <script src="views/profile/profile.js"></script>
+    
+
+</head>
+<body ng-app="PassportApp">
+    <div class="experiments-container" ng-controller="PassportAppCtrl">
+        <h1>Customized User Profile - PassportJS Authentication</h1>
+        <p>
+            In addition to the previous experiment, I have added functionality to automatically
+            routing to the user profile information page on successfull login.
+            If the user directly tries to access the profile information page without being logged in,
+            then he will be redirected to the login page and asked to login.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <ul class="nav nav-tabs">
+                <li role="presentation"><a href="#home">Home</a></li>
+                <li role="presentation"><a href="#profile">Profile</a></li>
+                <li role="presentation"><a href="#login">Login</a></li>
+                <li role="presentation">
+                    <button class="btn btn-danger" ng-click="logout()">Logout</button>
+                </li>
+            </ul>
+            <ng-view></ng-view>
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+
+        <b>Server JS:</b>
+        <xmp>
+            passport.use(new LocalStrategy(
+            function (username, password, done) {
+                for (var u in users) {
+                    if (username == users[u].username && password == users[u].password) {
+                        return done(null, users[u]);
+                    }
+                }
+                return done(null, false, {message : 'Unable to login'})
+            }));
+
+            passport.serializeUser(function (user, done) {
+                done(null, user);
+            });
+
+            passport.deserializeUser(function (user, done) {
+                done(null, user);
+            });
+
+            app.post("/login", passport.authenticate('local'), function (req, res) {
+                var user = req.user;
+                console.log(user);
+                res.jsonp(user);
+            });
+
+        </xmp>
+
+        <b>Client JS:</b>
+        <xmp>
+            var app = angular.module("PassportApp", ["ngRoute"]);
+
+            app.controller("PassportAppCtrl", function ($scope, $http, $location, $rootScope) {
+                $scope.logout = function () {
+                    $http.post("/logout")
+                    .success(function () {
+                        $rootScope.currentUser = null;
+                        $location.url("/home");
+                    });
+                };
+            });
+
+            app.config(function ($routeProvider, $httpProvider) {
+                $routeProvider
+                .when('/login', {
+                    templateUrl: 'views/login/login.html',
+                    controller: 'LoginCtrl',
+                })
+                .when('/home', {
+                    templateUrl: 'views/home/home.html'
+                    
+                })
+                .when('/profile', {
+                    templateUrl: 'views/profile/profile.html',
+                    controller: 'ProfileCtrl',
+                    resolve: {
+                        loggedin: isLoggedin
+                    }
+                }).
+                otherwise({
+                    redirectTo: '/home'
+                });
+            });
+
+            var isLoggedin = function ($q, $http, $location, $rootScope) {
+                var deferred = $q.defer();
+
+                $http.get('/loggedin').success(function (user) {
+                    $rootScope.errorMessage = null;
+                    // User is Authenticated
+                    if (user !== '0') {
+                        $rootScope.currentUser = user;
+                        deferred.resolve();
+                    }
+                    // User is Not Authenticated
+                    else {
+                        $rootScope.errorMessage = 'You need to log in.';
+                        deferred.reject();
+                        $location.url('/login');
+                    }
+                });
+
+                return deferred.promise;
+            };
+
+
+        </xmp>
+
+        <b>Login JS:</b>
+        <xmp>
+            app.controller("LoginCtrl", function ($scope, $http) {
+                $scope.login = function (user) {
+                    $http.post("/login", user)
+                    .success(function (response, status) {
+                        $scope.loginStatus = 'Logged in successfully !!!'
+                    })
+                    .error(function (response, status) {
+                        if (status == 401) {
+                            $scope.loginStatus = 'User authentication failed.'
+                        }
+                    });
+                }
+            });
+
+        </xmp>
+        <b>Profile HTML</b>
+        <xmp>
+            <div>
+                <dl>
+                    <dt>Name</dt>
+                    <dd>{{currentUser.firstName}} {{currentUser.lastName}}</dd>
+                    <dt>Favorite Dishes</dt>
+                    <dd>
+                        <ul class="list-unstyled" ng-repeat="favorite in currentUser.favorites">
+                            <li>{{favorite}}</li>
+                        </ul>
+                    </dd>
+                </dl>
+
+            </div>
+        </xmp>
+        <p>
+
+        </p>
+
+        <div>
+            <h1>References</h1>
+            <ul>
+                <li><a href="https://plus.google.com/u/0/events/c04m18uu19nknc17v3h35qd44j8" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>Source</h1>
+            <ul>        
+                <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/experiments/passport_project/001-passportAuthCustomUserProfile.html" target="_blank">HTML</a></li>
+                <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/javascript/experiments/passport_project/001-passportAuthCustomUserProfile.js" target="_blank">Client JS</a></li>
+                <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/experiments/passport_project/server.js" target="_blank">Server JS</a></li>
+            </ul>
+        </div>
+
+
+
+
+    </div>
+
+</body>
+</html>

@@ -8,3 +8,4 @@
 ../story/index.htm?../experiments/angular_routing/angularRoutingStory.txt       WEEK 6 - Routing with Angular.js
 ../story/index.htm?../experiments/nodejs/nodeJSStory.txt       WEEK 7 - Node JS
 ../story/index.htm?../experiments/mongodb/mongoDBStory.txt       WEEK 8 - MongoDB
+../story/index.htm?../experiments/passport_project/passportProjectStory.txt Week 9 - PassportJS and Project Experiments

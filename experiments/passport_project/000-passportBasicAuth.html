@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Basic PassportJS Authentication</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <script src="../../javascript/jquery.js"></script>
+    <script src="../../javascript/bootstrap.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/angular-route.js"></script>
+    <script src="../js/experiments/passport_project/000-passportBasicAuth.js"></script>
+    <script src="views/login/login.js"></script>
+    
+
+</head>
+<body ng-app="PassportApp">
+    <div class="experiments-container" ng-controller="PassportAppController">
+        <h1>Basice PassportJS Authentication</h1>
+        <p>
+            This experiment shows basic authentication in an application using PassportJS.
+            The PassportJS local strategy is used to authenticate a user against a list of static
+            user information. In the following experiments I have worked customized redirection based on
+            login and using MongoDB to manage user information and register more users.
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <ul class="nav nav-tabs">
+                <li role="presentation"><a href="#home">Home</a></li>
+                <li role="presentation"><a href="#login">Login</a></li>
+            </ul>
+            <ng-view></ng-view>
+        </div>&nbsp;
+        <h4>Code snippet:</h4>
+
+
+    <b>Server JS:</b>
+    <xmp>
+        passport.use(new LocalStrategy(
+            function (username, password, done) {
+                for (var u in users) {
+                    if (username == users[u].username && password == users[u].password) {
+                        return done(null, users[u]);
+                    }
+            }
+            return done(null, false, {message : 'Unable to login'})
+        }));
+
+        passport.serializeUser(function (user, done) {
+            done(null, user);
+        });
+
+        passport.deserializeUser(function (user, done) {
+            done(null, user);
+        });
+
+        app.post("/login", passport.authenticate('local'), function (req, res) {
+            var user = req.user;
+            console.log(user);
+            res.jsonp(user);
+        });
+
+    </xmp>
+
+    <b>Client JS:</b>
+    <xmp>
+        var app = angular.module("PassportApp", ["ngRoute"]);
+
+
+        app.config(function ($routeProvider, $httpProvider) {
+            $routeProvider
+            .when('/login', {
+                templateUrl: 'views/login/login.html',
+                controller: 'LoginCtrl',
+            })
+            .when('/home', {
+                templateUrl: 'views/home/home.html'
+            })
+            otherwise({
+                redirectTo: '/home'
+            });
+        });
+
+    </xmp>
+
+        <b>Login JS:</b>
+        <xmp>
+            app.controller("LoginCtrl", function ($scope, $http) {
+                $scope.login = function (user) {
+                    $http.post("http://cs5610-am10.rhcloud.com/login", user)
+                    .success(function (response, status) {
+                        $scope.loginStatus = 'Logged in successfully !!!'
+                    })
+                    .error(function (response, status) {
+                        if (status == 401) {
+                            $scope.loginStatus = 'User authentication failed.'
+                        }
+                    });
+                }
+            });
+
+        </xmp>
+    <p>
+        
+    </p>
+
+    <div>
+        <h1>References</h1>
+        <ul>
+            <li><a href="https://plus.google.com/u/0/events/c5labogb0297vblgov1ipra8nek" target="_blank">Prof. Jose Annunziato's lecture</a></li>
+        </ul>
+    </div>
+
+    <div>
+        <h1>Source</h1>
+        <ul>
+            <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/experiments/passport_project/000-passportBasicAuth.html" target="_blank">HTML</a></li>
+            <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/javascript/experiments/passport_project/000-passportBasicAuth.js" target="_blank">Client JS</a></li>
+            <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/experiments/passport_project/server.js" target="_blank">Server JS</a></li>
+        </ul>
+    </div>
+
+
+
+
+</div>
+
+</body>
+</html>

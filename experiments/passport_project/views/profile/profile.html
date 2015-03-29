@@ -1,0 +1,13 @@
+﻿<div>
+    <dl>
+        <dt>Name</dt>
+        <dd>{{currentUser.firstName}} {{currentUser.lastName}}</dd>
+        <dt>Favorite Dishes</dt>
+        <dd>
+            <ul class="list-unstyled" ng-repeat="favorite in currentUser.favorites">
+                <li>{{favorite}}</li>
+            </ul>
+        </dd>
+    </dl>
+    
+</div>
