@@ -1,3 +1,4 @@
 ﻿http://cs5610-am10.rhcloud.com/passport_project/000-passportBasicAuth.html                                                  Basic PassportJS Authentication
 http://cs5610-am10.rhcloud.com/passport_project/001-passportAuthCustomUserProfile.html                                      Customized User Profile - PassportJS Authentication
 http://cs5610-am10.rhcloud.com/passport_project/002-passportAuthMongoRegister.html                                          PassportJS Authentication with MongoDB
+http://cs5610-am10.rhcloud.com/passport_project/003-beingChefProjectSearch.html												BeingChef Project Initial Search and Details

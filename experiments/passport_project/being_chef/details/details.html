@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <div class="col-xs-4">
+        <img ng-src="{{dish.ImageURL}}" class="img-responsive"/>
+    </div>
+    <div class="col-xs-8">
+        <dd>Name:</dd>
+        <dt>{{dish.Title}}</dt>
+        <dd ng-show="dish.description">Description:</dd>
+        <dt ng-show="dish.description">{{dish.Description}}</dt>
+        <dd>Cuisine:</dd>
+        <dt>{{dish.Cuisine}}</dt>
+        <dd>Ingredients:</dd>
+        <table class="table table-striped">
+            <tr ng-repeat="ingredient in dish.Ingredients">
+                <td>
+                    {{ingredient.Name}}
+                </td>
+                <td>
+                    {{ingredient.Quantity}} {{ingredient.Unit}} 
+                </td>
+            </tr>
+
+        </table>
+        <dd>Instructions:</dd>
+        <dt>{{dish.Instructions}}</dt>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿<div class="search-bg">
+    <div class="row search-box">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." ng-model="searchText">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="search()">Go!</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+        <div class="col-xs-4"></div>
+    </div>
+</div>
+<div ng-show="searchResults">
+    &nbsp;
+    <h4>Search Results:</h4>
+    <div class="row" ng-repeat="result in searchResults" ng-show="searchResults">
+        <div class="col-xs-4" ng-repeat="item in result">
+            <a href="#/detail/{{item.RecipeID}}">
+                <div>
+                    <img ng-src="{{item.ImageURL}}" class="search-result-img" />
+                </div>
+                <div>{{item.Title}}</div>
+            </a>
+
+        </div>&nbsp;&nbsp;
+    </div>
+</div>
