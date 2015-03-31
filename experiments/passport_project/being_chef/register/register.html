@@ -1,0 +1,34 @@
+﻿<div class="form-group">
+    <table class="table table-condensed">
+        <tr>
+            <td><label>First Name</label></td>      
+            <td><input name="firstName" ng-model="user.firstName" /></td>
+        </tr>
+        <tr>
+            <td><label>Last Name</label></td>
+            <td><input name="lastName" ng-model="user.lastName" /></td>
+        </tr>
+        <tr>
+            <td><label>Username</label></td>
+            <td><input name="username" ng-model="user.username" /></td>
+        </tr>
+        <tr>
+            <td><label>Password</label></td>
+            <td><input type="password" name="password" ng-model="user.password" /></td>
+        </tr>
+        <tr>
+            <td><label>Favorite Food Dishes</label></td>
+            <td>
+                <input ng-model="dishItem" />
+                <button type="button" class="btn btn-success" ng-click="addDish()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                <ul ng-repeat="favorite in user.favorites">
+                    <li>{{favorite}}</li>
+                </ul>
+            </td>        
+        </tr>
+    </table>
+    
+</div>
+<button class="btn btn-default" ng-click="registerUser()">Submit</button>

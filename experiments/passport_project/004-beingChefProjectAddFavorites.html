@@ -1,30 +1,68 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Being Chef Project Search</title>
+    <title>Being Chef Project Add Favorites</title>
     <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="../css/being_chef/common.css" />    
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.js"></script>
     <script src="../js/angular.min.js"></script>
     <script src="../js/angular-route.js"></script>
-    <script src="../js/experiments/passport_project/003-beingChefProjectSearch.js"></script>
+    <script src="../js/experiments/passport_project/004-beingChefProjectAddFavorites.js"></script>
     <script src="being_chef/home/home.js"></script>
     <script src="being_chef/details/details.js"></script>
+    <script src="being_chef/login/login.js"></script>
+    <script src="being_chef/register/register.js"></script>
+    <script src="being_chef/favorite/favorite.js"></script>
+
 </head>
 <body ng-app="BeingChefApp">
-    <div class="container">
-        <h1>Being Chef Project Search</h1>
+    <div class="container" ng-controller="BeingChefCtrl">
+        <h1>Being Chef Project Add Favorites</h1>
         <p>
-            This experiment is a initial search functionality of the CS 5610 project.
-            Clicking on the the search recipes will redirect the user to the details page
-            where one can view the recipe ingredients and instructions to cook.
+            This experiment adds functionality to the previous experiment to login/register as user, add searched recipes as favorites from the details
+            page of the recipe.
+            The receipe details page can be accessed by searching for a dish and clicking on a particular dish thumbnail
+            in the search results.
         </p>
         <h4>Demo:</h4>
-        <ng-view></ng-view>
+        <div>
+            <ul class="nav nav-tabs">
+                <li role="presentation"><a class="navbar-brand" href="#home">Home</a></li>
+                <li role="presentation"><a class="navbar-brand" href="#register">Register</a></li>
+                <li role="presentation" ng-show="currentUser"><a class="navbar-brand" href="#favorite">My Favorites</a></li>
+                <li role="presentation" ng-hide="currentUser"><a class="navbar-brand" href="#login">Login</a></li>
+                <li role="presentation" ng-show="currentUser">
+                    <button class="btn btn-danger" ng-click="logout()">Logout</button>
+                </li>
+                <li role="presentation" ng-show="currentUser"><label class="navbar-brand" >Hi {{currentUser.firstName}} !!!</label></li>
+            </ul>
+            <ng-view></ng-view>
+        </div>&nbsp;
 
 
         <h4>Code snippet:</h4>
+        <b>Server JS</b>
+        <xmp>
+            app.post('/favorite', function (req, res) {
+                var reqData = req.body;
+                UserModel.findById(reqData.user, function (err, data) {
+                    console.log(data);
+                    data.favorites.push(reqData.dish.Title);
+                    console.log(data);
+                    data.save(function (err, data) {
+                        res.jsonp(data);
+                    });
+                });
+            });
+
+            app.post("/login", passport.authenticate('local'), function (req, res) {
+                var user = req.user;
+                console.log(user);
+                res.jsonp(user);
+            });
+
+        </xmp>
         <b>Client JS</b>
         <xmp>
             var app = angular.module("BeingChefApp", ['ngRoute']);
@@ -147,6 +185,7 @@
                 <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/experiments/passport_project/003-beingChefProjectSearch.html" target="_blank">HTML</a></li>
                 <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/css/experiments/passport_project/being_chef/common.css" target="_blank">CSS</a></li>
                 <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/javascript/experiments/passport_project/003-beingChefProjectSearch.js" target="_blank">Client JS</a></li>
+                <li><a href="http://net4.ccs.neu.edu/home/am10/fileview/Default.aspx?~/javascript/experiments/passport_project/server.js" target="_blank">Server JS</a></li>
             </ul>
         </div>
     </div>

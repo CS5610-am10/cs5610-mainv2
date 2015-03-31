@@ -248,8 +248,7 @@ var users =
 [
     {username: 'alice', password: 'alice', firstName: 'Alice', lastName: 'Wonderland', favorites: ['Cheese pizza', 'Chicken teriyaki']},
     { username: 'bob', password: 'bob', firstName: 'Bob', lastName: 'Marley', favorites: ['TLC Sandwich'] },
-    { username: 'charlie', password: 'charlie', firstName: 'Charlie', lastName: 'Brown', favorites: ['Alfredo pasta'] },
-    { username: 'ankit', password: 'ankit', firstName: 'Ankit', lastName: 'Masrani', favorites: ['Pav Bhaji', 'Vada Pav'] }
+    { username: 'charlie', password: 'charlie', firstName: 'Charlie', lastName: 'Brown', favorites: ['Alfredo pasta'] }
 ];
 
 passport.use(new LocalStrategy(
@@ -259,11 +258,13 @@ function (username, password, done) {
             return done(null, users[u]);
         }
     }
+
     UserModel.findOne({ username: username, password: password }, function (err, user) {
         if (err) { return done(err); }
+        if (!user) { return done(null, false); }
         return done(null, user);
+        
     });
-    return done(null, false, {message : 'Unable to login'})
 }));
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -302,6 +303,18 @@ app.post('/register', function (req, res) {
                 if (err) { return next(err); }
                 res.json(user);
             });
+        });
+    });
+});
+
+app.post('/favorite', function (req, res) {
+    var reqData = req.body;
+    UserModel.findById(reqData.user, function (err, data) {
+        console.log(data);
+        data.favorites.push(reqData.dish.Title);
+        console.log(data);
+        data.save(function (err, data) {
+            res.jsonp(data);
         });
     });
 });

@@ -3,8 +3,9 @@
         $http.post("/login", user)
         .success(function (response, status) {
             $rootScope.loginStatus = 'Hi '+ response.firstName;
-            console.log(response);
-            $location.url("/profile");
+            console.log(response._id);
+            $rootScope.currentUser = response;
+            $location.url("/home");
         })
         .error(function (response, status) {
             if (status == 401) {
