@@ -54,7 +54,7 @@
         <div ng-show="searchResults && searchResults.ResultCount > 0">
             <h2>Search Results:</h2>
             <span class="date sub-text">Found {{searchResults.Results.length}} results in {{secs}} seconds</span>
-            <div class="row-centered">
+            <div class="row-centered row">
                 <div class="col-centered">
                     <button class="btn btn-default" ng-disabled="currentPage == 0" ng-click="prevPage()">
                         <span class="glyphicon glyphicon-chevron-left beingchef-page-nav" aria-hidden="true"></span>
@@ -65,7 +65,7 @@
 
                 </div>
             </div>
-            <div class="row row-centered" id="searchResults" ng-show="searchResults && searchResults.ResultCount > 0">
+            <div class="row-centered row-display" id="searchResults" ng-show="searchResults && searchResults.ResultCount > 0">
                 <div class="col-sm-3" ng-repeat="result in searchResults.Results | startFrom: currentPage * pageSize | limitTo: pageSize">
                     <div class="well well-sm">
                         <a href="#/detail/{{result.RecipeID}}">
@@ -81,18 +81,7 @@
                 </div>
             </div>
 
-            <div class=" row row-centered">
-                <div class="col-centered">
-                    <button class="btn btn-default" ng-disabled="currentPage == 0" ng-click="prevPage()">
-                        <span class="glyphicon glyphicon-chevron-left beingchef-page-nav" aria-hidden="true"></span>
-                    </button>
-                    <button class="btn btn-default" ng-disabled="currentPage >= searchResults.Results.length/pageSize - 1" ng-click="nextPage()">
-                        <span class="glyphicon glyphicon-chevron-right beingchef-page-nav" aria-hidden="true"></span>
-                    </button>
-
-                </div>
-
-            </div>
+           
         </div>
         
         <div>
