@@ -1,0 +1,21 @@
+﻿
+.search-result-img {
+    max-height: 100px;
+    max-width: 250px;
+}
+
+
+.row-centered {
+    text-align:center;
+    margin-bottom:10px;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+
+.search-result-text {
+    font-size:12px;
+}

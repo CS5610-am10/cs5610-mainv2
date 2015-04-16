@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Tabs</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/project_beingchef/001-beingChefCustomTabs.css" />        
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/bootstrap-rating-input.min.js"></script>
+    <script src="../../javascript/experiments/project_beingchef/001-beingChefCustomTabs.js"></script>
+    <script src="../../javascript/experiments/project_beingchef/beingchef-service.js"></script>
+    <script src="../../javascript/humanized_time_span.js"></script>
+</head>
+<body ng-app="BeingChefApp">
+    <div class="experiments-container" ng-controller="BeingChefCtrl">
+        <h1>BeingChef Project Personal Dashboard Tabs</h1>
+        <p>
+            The BeingChef project allows users to mark certain recipes as favorites and provide reviews.
+            <div>
+                This experiment shows the design of the personal dashboard of the user and how a particular user's 
+                favorites and reviews will be displayed. The actual project will have few more tabs: People the user is following,
+                user's grocery list.
+            </div>
+        </p>
+        <h4>Demo:</h4>
+        <strong>Trying to delete favorites and reviews will work only on the project website</strong>
+        <div>
+            <ul class="tabs">
+                <li class="tab-link current" data-target="#favorites">My Favorites</li>
+                <li class="tab-link" data-target="#reviews">My Reviews</li>
+            </ul>
+
+            <div id="favorites" class="tab-content current">
+                <h3><span ng-hide="favorites && favorites.length > 0" class="label label-info">No favorites to display</span></h3>
+                <div ng-show="favorites && favorites.length > 0" class="row">
+                    <div class="col-sm-4" ng-repeat="favorite in favorites">
+                        <div class="well well-sm">
+                            <button type="button" disabled class="btn btn-danger pull-right" ng-click="removeFavorite(favorite._id)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                            <div>
+                                <img ng-src="{{favorite.recipeUrl}}" class="search-result-img img-responsive" />
+
+                            </div>
+                            <a href="http://beingchef-am10.rhcloud.com/#/detail/{{favorite.recipeId}}" target="_blank">{{favorite.recipeTitle}}</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="reviews" class="tab-content">
+                <h3><span ng-hide="reviews && reviews.length > 0" class="label label-info">No reviews to display</span></h3>
+                <div class="row" ng-show="reviews && reviews.length > 0">
+                    <div class="col-sm-4" ng-repeat="review in reviews">
+                        <div class="well well-sm">
+                            <button type="button" disabled class="btn btn-danger pull-right" ng-click="removeReview($index, review._id, reviews.recipeId)">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                            <img ng-src="{{review.recipeUrl}}" class="search-result-img img-responsive" />
+
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="http://beingchef-am10.rhcloud.com/#/detail/{{review.recipeId}}" target="_blank">{{review.recipeTitle}}</a>
+                                </li>
+                                <li>
+                                    <div>
+                                        <strong>Rating: </strong>
+                                        <span class="glyphicon glyphicon-star" ng-repeat="i in [] | range : review.rating"></span>
+                                        <span class="glyphicon glyphicon-star-empty" ng-repeat="i in [] | range : 5-review.rating"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Comments:</strong>
+                                    {{review.comment}}
+                                </li>
+                                <li>
+                                    <span class="date sub-text">about {{review.timeSpan}}</span>
+                                </li>
+                                <li>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <h4>Code snippet:</h4>
+
+            <strong>HTML:</strong>
+<xmp>
+    <div>
+        <ul class="tabs">
+            <li class="tab-link current" data-target="#favorites">My Favorites</li>
+            <li class="tab-link" data-target="#reviews">My Reviews</li>
+        </ul>
+
+        <div id="favorites" class="tab-content current">
+            <h3><span ng-hide="favorites && favorites.length > 0" class="label label-info">No favorites to display</span></h3>
+            <div ng-show="favorites && favorites.length > 0" class="row">
+                <div class="col-sm-4" ng-repeat="favorite in favorites">
+                    <div class="well well-sm">
+                        <button type="button" class="btn btn-danger pull-right" ng-click="removeFavorite(favorite._id)">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                        <div>
+                            <img ng-src="{{favorite.recipeUrl}}" class="search-result-img img-responsive" />
+
+                        </div>
+                        <a href="#/detail/{{favorite.recipeId}}">{{favorite.recipeTitle}}</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="reviews" class="tab-content">
+            <h3><span ng-hide="reviews && reviews.length > 0" class="label label-info">No reviews to display</span></h3>
+            <div class="row" ng-show="reviews && reviews.length > 0">
+                <div class="col-sm-4" ng-repeat="review in reviews">
+                    <div class="well well-sm">
+                        <button type="button" class="btn btn-danger pull-right" ng-click="removeReview($index, review._id, reviews.recipeId)">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                        <img ng-src="{{review.recipeUrl}}" class="search-result-img img-responsive" />
+
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="#/detail/{{review.recipeId}}">{{review.recipeTitle}}</a>
+                            </li>
+                            <li>
+                                <div>
+                                    <strong>Rating: </strong>
+                                    <span class="glyphicon glyphicon-star" ng-repeat="i in [] | range : review.rating"></span>
+                                    <span class="glyphicon glyphicon-star-empty" ng-repeat="i in [] | range : 5-review.rating"></span>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Comments:</strong>
+                                {{review.comment}}
+                            </li>
+                            <li>
+                                <span class="date sub-text">about {{review.timeSpan}}</span>
+                            </li>
+                            <li>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</xmp>
+<strong>CSS: </strong>
+<xmp>
+    ul.tabs {
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+
+    }
+
+    ul.tabs li {
+        background-color: #337ab7;
+        color: #222;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight:bold;
+    }
+
+    ul.tabs li.current {
+        background: #ededed;
+        color: #222;
+        border-top:solid 3px;
+        border-top-color:#337ab7;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight:bolder;
+    }
+
+    .tab-content {
+        display: none;
+        background: #ededed;
+        padding: 15px;
+        border-color: #bce8f1
+    }
+
+    .tab-content.current {
+        display: inherit;
+    }
+
+</xmp>
+<strong>Client JS: </strong>
+<xmp>
+    var app = angular.module("BeingChefApp", []);
+
+    app.controller("BeingChefCtrl", function ($scope, BeingChefService) {
+        $('ul.tabs li').click(function () {
+
+            var tab_id = $(this).attr('data-target');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $(tab_id).addClass('current');
+        })
+
+        BeingChefService.getUserByUsername("test", function (data) {
+            BeingChefService.getFavorites(data.user._id, function (favorites) {
+                console.log(favorites);
+                $scope.favorites = favorites;
+            })
+
+            BeingChefService.getReviewsByUser(data.user._id, function (reviews) {
+                $scope.reviews = reviews;
+                for (i in $scope.reviews) {
+                  $scope.reviews[i].timeSpan = humanized_time_span($scope.reviews[i].creationDate);
+                }
+            })
+        });
+
+
+    });
+
+    app.filter('range', function () {
+        return function (val, range) {
+        range = parseInt(range);
+        for (var i = 0; i < range; i++)
+        val.push(i);
+        return val;
+    };
+    });
+</xmp>
+            <p>
+                jQuery and CSS is primarily used to build the custom tabs and the content within the tabs is fed through Angular JS controller.
+            </p>
+            <div>
+                <h1>References</h1>
+                <ul class="list-unstyled">
+                    <li><a href="https://jqueryui.com/tabs/" target="_blank">jQuery UI tabs</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h1>Source</h1>
+                <ul class="list-unstyled">
+
+                    <li><a href="../../fileview/Default.aspx?~/experiments/project_beingchef/001-beingChefCustomTabs.html" target="_blank">HTML</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/css/experiments/project_beingchef/001-beingChefCustomTabs.css" target="_blank">CSS for experiment</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/javascript/experiments/project_beingchef/001-beingChefCustomTabs.js" target="_blank">Client JS</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

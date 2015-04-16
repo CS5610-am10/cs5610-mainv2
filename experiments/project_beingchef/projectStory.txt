@@ -1,0 +1,5 @@
+﻿000-beingChefReviewCommentsBox.html                               BeingChef Project Review and Comments Box Design
+001-beingChefCustomTabs.html                                      BeingChef Project Personal Dashboard Tabs
+002-beingChefModalExample.html                                    BeingChef Project Modal Window
+003-beingChefPublicUserPage.html								  BeingChef Public User Page
+004-beingChefSearchPagination.html								  BeingChef Search Recipes with results pagination

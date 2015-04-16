@@ -1,0 +1,43 @@
+﻿ul.tabs {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    
+}
+
+    ul.tabs li {
+        background-color: #337ab7;
+        color: #222;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        font-weight:bold;
+    }
+
+        ul.tabs li.current {
+            background: #ededed;
+            color: #222;
+            border-top:solid 3px;
+            border-top-color:#337ab7;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-weight:bolder;
+        }
+
+.tab-content {
+    display: none;
+    background: #ededed;
+    padding: 15px;
+   border-color: #bce8f1
+}
+
+    .tab-content.current {
+        display: inherit;
+    }
+
+.search-result-img {
+    max-height: 200px;
+    max-width: 350px;
+}

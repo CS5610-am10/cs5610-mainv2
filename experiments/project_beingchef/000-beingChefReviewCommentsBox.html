@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Review and Comments Box</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/experiments.css" />
+    <link rel="stylesheet" href="../../css/experiments/project_beingchef/000-beingChefReviewCommentsBox.css" />
+    
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/angular.min.js"></script>
+    <script src="../../javascript/bootstrap-rating-input.min.js"></script>
+    <script src="../../javascript/experiments/project_beingchef/000-beingChefReviewCommentsBox.js"></script>
+    <script src="../../javascript/humanized_time_span.js"></script>
+
+</head>
+<body ng-app="BeingChefApp">
+    <div class="experiments-container" ng-controller="BeingChefCtrl">
+        <h1>BeingChef Project Review and Comments Box Design</h1>
+        <p>
+            The BeingChef project allows users to enter reviews and comments about various recipes. This functionality is
+            available on the details page of a recipe.
+            <div>
+                As you can see below the user can enter the their reviews in the text area and give 1 to 5 star rating.
+            </div>
+        </p>
+        <h4>Demo:</h4>
+        <div>
+            <div >
+                <strong ng-show="reviews.length > 0">User Reviews:</strong>
+                <strong ng-hide="reviews.length > 0">Be the first one to review</strong>
+                <div class="actionBox">
+
+                    <ul class="commentList" ng-show="reviews">
+                        <li ng-repeat="review in reviews">
+                            <span class="glyphicon glyphicon glyphicon-user commenterImage" aria-hidden="true"></span>
+                            <div class="commentText">
+                                <div>
+                                    <span class="glyphicon glyphicon-star" ng-repeat="i in [] | range : review.rating"></span>
+                                    <span class="glyphicon glyphicon-star-empty" ng-repeat="i in [] | range : 5-review.rating"></span>
+                                </div>
+                                <p>{{review.comment}} </p> <span class="date sub-text">by {{review.username}}, {{review.timeSpan}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Enter your review here..." rows="5" ng-model="review.comment"></textarea>
+                            <input class="rating" id="rating" data-max="5" data-min="1" type="number" />
+                        </div>
+                        <button class="btn btn-success" ng-click="addReview(review)">Add Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4>Code snippet:</h4>
+
+            <strong>HTML:</strong>
+<xmp>
+    <div class="col-xs-4 ">
+        <strong ng-show="reviews.length > 0">User Reviews:</strong>
+        <strong ng-hide="reviews.length > 0">Be the first one to review</strong>
+        <div class="actionBox">
+
+            <ul class="commentList" ng-show="reviews">
+                <li ng-repeat="review in reviews">
+                    <span class="glyphicon glyphicon glyphicon-user commenterImage" aria-hidden="true"></span>
+                    <div class="commentText">
+                        <div>
+                            <span class="glyphicon glyphicon-star" ng-repeat="i in [] | range : review.rating"></span>
+                            <span class="glyphicon glyphicon-star-empty" ng-repeat="i in [] | range : 5-review.rating"></span>
+                        </div>
+                        <p>{{review.comment}} </p> <span class="date sub-text">by {{review.username}}, {{review.timeSpan}}</span>
+                    </div>
+                </li>
+            </ul>
+            <form role="form">
+                <div class="form-group">
+                    <textarea class="form-control animated" cols="50" id="new-review" 
+                              name="comment" placeholder="Enter your review here..." rows="5" ng-model="review.comment"></textarea>
+                    <input class="rating" id="rating" data-max="5" data-min="1" type="number" />
+                </div>
+                <button class="btn btn-success" ng-click="addReview(review)">Add Review</button>
+            </form>
+        </div>
+    </div>
+</xmp>
+<strong>CSS: </strong>
+<xmp>
+    .commentBox {
+        padding:10px;
+        border-top:1px dotted #bbb;
+    }
+    .commentBox .form-group:first-child, .actionBox .form-group:first-child {
+         width:80%;
+    }
+    .commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+        width:18%;
+    }
+
+    .taskDescription {
+        margin-top:10px 0;
+    }
+    .commentList {
+        padding:0;
+        list-style:none;
+        overflow:auto;
+    }
+    .commentList li {
+        margin:0;
+        margin-top:10px;
+    }
+    .commentList li > div {
+        display:table-cell;
+    }
+    .commenterImage {
+        width:30px;
+        margin-right:5px;
+        height:100%;
+        float:left;
+    }
+    .commenterImage img {
+        width:100%;
+        border-radius:50%;
+    }
+    .commentText p {
+        margin:0;
+    }
+    .sub-text {
+        color:#aaa;
+        font-family:verdana;
+        font-size:11px;
+    }
+</xmp>
+            <p>
+                The main features of this functionality was to use glyphicons to take rating input from the user and use a humanized timespan
+                library to display elapsed time for the comment in a human readable form.
+            </p>
+            <div>
+                <h1>References</h1>
+                <ul class="list-unstyled">
+                    <li><a href="http://www.javascriptoo.com/humanized-time-span" target="_blank">Humanized Time Span</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h1>Source</h1>
+                <ul class="list-unstyled">
+
+                    <li><a href="../../fileview/Default.aspx?~/experiments/project_beingchef/000-beingChefReviewCommentsBox.html" target="_blank">HTML</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/css/experiments.css" target="_blank">CSS for page</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/css/experiments/project_beingchef/000-beingChefReviewCommentsBox.css" target="_blank">CSS for experiment</a></li>
+                    <li><a href="../../fileview/Default.aspx?~/javascript/experiments/project_beingchef/000-beingChefReviewCommentsBox.js" target="_blank">Javascript</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

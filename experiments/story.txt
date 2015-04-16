@@ -9,3 +9,4 @@
 ../story/index.htm?../experiments/nodejs/nodeJSStory.txt       WEEK 7 - Node JS
 ../story/index.htm?../experiments/mongodb/mongoDBStory.txt       WEEK 8 - MongoDB
 ../story/index.htm?../experiments/passport_project/passportProjectStory.txt Week 9 - PassportJS and Project Experiments
+../story/index.htm?../experiments/project_beingchef/projectStory.txt Week 10 - Project Experiments
