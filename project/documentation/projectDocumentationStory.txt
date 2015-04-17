@@ -1,0 +1,15 @@
+﻿000-projectOverview.html	                                                  Project Overview
+001-projectHome.html                                              BeingChef Home and Navigation Bar
+002-projectFlow.html	                                          BeingChef Application Flow
+003-projectLogin.html	                                          BeingChef Login and Register
+004-projectSearch.html	                                          BeingChef Search
+005-projectDetails.html	                                          BeingChef Recipe Details
+006-projectUserDasboard-Favorites.html	                          BeingChef User Dashboard-Favorites
+007-projectUserDasboard-Reviews.html	                          BeingChef User Dashboard-Reviews
+008-projectUserDasboard-Following.html	                          BeingChef User Dashboard-Following
+009-projectUserDashboard-GroceryList.html	                      BeingChef User Dashboard-Grocery List
+010-projectPublicUserpage.html	                         BeingChef Public User Page
+011-projectAboutContact.html	                          BeingChef About us and Contact us Page
+012-projectResponsiveness.html	                          BeingChef Responsiveness
+013-projectMongoDB.html											  BeingChef MongoDB Schema
+014-projectFinalComments.html	                          BeingChef Final Comments

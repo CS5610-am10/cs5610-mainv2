@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>BeingChef MongoDB Schema</title>
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/project/common.css" />
+    <script src="../../javascript/bootstrap.min.js"></script>
+    <script src="../../javascript/jquery-2.1.3.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Arizonia" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h2><strong>BeingChef MongoDB Schema</strong></h2>
+            <p>
+                The back end of the <span class="beingchef-title">BeingChef</span> application is MongoDB where
+                recipe and user information is managed in various collections. The Mongoose API is used in the NodeJS to interact with the database.
+            </p>
+            <p>
+                <strong><i>User authentication is managed via the PassportJS local strategy along with Express' session management.</i></strong>
+            </p>
+            <p>
+                Below is the back end schema description of the application:
+            </p>
+            <ul>
+                <li>
+                    <h4>User Schema attributes:</h4>
+                    <p>
+                        <ol>
+                            <li>
+                                username: String
+                            </li>
+                            <li>
+                                password: { type: String, select: false } <i>selection of password disabled</i>
+                            </li>
+                            <li>firstName: String</li>
+                            <li>email: String</li>
+                            <li>favorites: [FavoriteSchema]</li>
+                            <li>reviews: [Schema.ObjectId]</li>
+                            <li>following: [Schema.ObjectId]</li>
+                            <li>groceryList: [IngredientSchema]</li>
+                            
+                        </ol>
+                    </p>        
+                </li>
+                <li>
+                    <h4>Recipe Schema attributes:</h4>
+                    <p>
+                        <ol>
+                            <li>title: String</li>
+                            <li>externalId : String</li>
+                            <li>description: String</li>
+                            <li>url: String</li>
+                            <li>reviews: [Schema.ObjectId]</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>Recipe Schema attributes:</h4>
+                    <p>
+                        <ol>
+                            <li>rating: {type: Number, default: 0, max: 5}</li>
+                            <li>comment: String</li>
+                            <li>creationDate: {type:Date, default:Date.now}</li>
+                            <li>username: String</li>
+                            <li>recipeTitle: String</li>
+                            <li>recipeUrl: String</li>
+                            <li>recipeId: String</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>Ingredient Schema attributes:</h4>
+                    <p>
+                        <ol>
+                            <li>name: String</li>
+                            <li>quantity: Number</li>
+                            <li>unit: String</li>
+                        </ol>
+                    </p>
+                </li>
+                <li>
+                    <h4>Favorites Schema attributes:</h4>
+                    <p>
+                        <ol>
+                            <li>recipeTitle: String</li>
+                            <li>recipeUrl: String</li>
+                            <li>recipeId: String</li>
+                        </ol>
+                    </p>
+                </li>
+            </ul>
+            
+        </div>
+       
+       
+    </div>
+</body>
+</html>
