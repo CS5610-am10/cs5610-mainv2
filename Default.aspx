@@ -17,7 +17,8 @@
 <link href="css/bootstrap.min.css" rel="stylesheet" />
 <script src="javascript/jquery-2.1.3.min.js"></script>
 <script src="javascript/bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="css/project/common.css" />
+<link href="http://fonts.googleapis.com/css?family=Arizonia" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -48,8 +49,16 @@
 				<li><a href="images/autoimage.aspx" target="_blank">Images</a></li>
 				<li><a href="story/index.htm?../experiments/story.txt" target="_blank">Experiments</a></li>
 				<li><a href="blog/" target="_blank">Blog</a></li>
-				<li><a href="http://beingchef-am10.rhcloud.com/" target="_blank">Project</a></li>
-				<li><a href="story/index.htm?../project/story.txt" target="_blank">Documentation</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Project <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="http://beingchef-am10.rhcloud.com/" target="_blank"><span class="beingchef-title">BeingChef</span></a></li>
+                    <li class="divider"></li>
+                    <li><a href="story/index.htm?../project/story.txt" target="_blank">Documentation</a></li>
+                    <li class="divider"></li>
+                    <li><a href="https://github.com/CS5610-am10/beingchef" target="_blank">Source Code</a></li>
+                  </ul>
+                </li>
 				<li><a href="https://github.com/CS5610-am10/cs5610-mainv2" target="_blank">Github</a></li>
                         </ul>
                     </div>
