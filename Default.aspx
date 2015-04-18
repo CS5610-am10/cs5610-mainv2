@@ -19,7 +19,7 @@
 <script src="javascript/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/project/common.css" />
 <link href="http://fonts.googleapis.com/css?family=Arizonia" rel="stylesheet" type="text/css">
-
+<link rel="shortcut icon" href="images/ico/favicon.ico" />
 </head>
 
 <body>
